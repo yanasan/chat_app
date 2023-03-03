@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$HomePageState {
   Query<Map<String, dynamic>> get query => throw _privateConstructorUsedError;
-  List<Friends> get friends => throw _privateConstructorUsedError;
+  List<Friends> get friendslist => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomePageStateCopyWith<HomePageState> get copyWith =>
@@ -30,7 +30,7 @@ abstract class $HomePageStateCopyWith<$Res> {
           HomePageState value, $Res Function(HomePageState) then) =
       _$HomePageStateCopyWithImpl<$Res, HomePageState>;
   @useResult
-  $Res call({Query<Map<String, dynamic>> query, List<Friends> friends});
+  $Res call({Query<Map<String, dynamic>> query, List<Friends> friendslist});
 }
 
 /// @nodoc
@@ -47,16 +47,16 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
   @override
   $Res call({
     Object? query = null,
-    Object? friends = null,
+    Object? friendslist = null,
   }) {
     return _then(_value.copyWith(
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
               as Query<Map<String, dynamic>>,
-      friends: null == friends
-          ? _value.friends
-          : friends // ignore: cast_nullable_to_non_nullable
+      friendslist: null == friendslist
+          ? _value.friendslist
+          : friendslist // ignore: cast_nullable_to_non_nullable
               as List<Friends>,
     ) as $Val);
   }
@@ -70,7 +70,7 @@ abstract class _$$_HomePageStateCopyWith<$Res>
       __$$_HomePageStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Query<Map<String, dynamic>> query, List<Friends> friends});
+  $Res call({Query<Map<String, dynamic>> query, List<Friends> friendslist});
 }
 
 /// @nodoc
@@ -85,16 +85,16 @@ class __$$_HomePageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? query = null,
-    Object? friends = null,
+    Object? friendslist = null,
   }) {
     return _then(_$_HomePageState(
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
               as Query<Map<String, dynamic>>,
-      friends: null == friends
-          ? _value._friends
-          : friends // ignore: cast_nullable_to_non_nullable
+      friendslist: null == friendslist
+          ? _value._friendslist
+          : friendslist // ignore: cast_nullable_to_non_nullable
               as List<Friends>,
     ));
   }
@@ -104,23 +104,23 @@ class __$$_HomePageStateCopyWithImpl<$Res>
 
 class _$_HomePageState implements _HomePageState {
   const _$_HomePageState(
-      {required this.query, final List<Friends> friends = const []})
-      : _friends = friends;
+      {required this.query, final List<Friends> friendslist = const []})
+      : _friendslist = friendslist;
 
   @override
   final Query<Map<String, dynamic>> query;
-  final List<Friends> _friends;
+  final List<Friends> _friendslist;
   @override
   @JsonKey()
-  List<Friends> get friends {
-    if (_friends is EqualUnmodifiableListView) return _friends;
+  List<Friends> get friendslist {
+    if (_friendslist is EqualUnmodifiableListView) return _friendslist;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_friends);
+    return EqualUnmodifiableListView(_friendslist);
   }
 
   @override
   String toString() {
-    return 'HomePageState(query: $query, friends: $friends)';
+    return 'HomePageState(query: $query, friendslist: $friendslist)';
   }
 
   @override
@@ -129,12 +129,13 @@ class _$_HomePageState implements _HomePageState {
         (other.runtimeType == runtimeType &&
             other is _$_HomePageState &&
             (identical(other.query, query) || other.query == query) &&
-            const DeepCollectionEquality().equals(other._friends, _friends));
+            const DeepCollectionEquality()
+                .equals(other._friendslist, _friendslist));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, query, const DeepCollectionEquality().hash(_friends));
+      runtimeType, query, const DeepCollectionEquality().hash(_friendslist));
 
   @JsonKey(ignore: true)
   @override
@@ -146,12 +147,12 @@ class _$_HomePageState implements _HomePageState {
 abstract class _HomePageState implements HomePageState {
   const factory _HomePageState(
       {required final Query<Map<String, dynamic>> query,
-      final List<Friends> friends}) = _$_HomePageState;
+      final List<Friends> friendslist}) = _$_HomePageState;
 
   @override
   Query<Map<String, dynamic>> get query;
   @override
-  List<Friends> get friends;
+  List<Friends> get friendslist;
   @override
   @JsonKey(ignore: true)
   _$$_HomePageStateCopyWith<_$_HomePageState> get copyWith =>

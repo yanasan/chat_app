@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chat_app/models/friends.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -16,23 +18,27 @@ class FireFriendsService {
         .doc('all')
         .collection('users')
         .doc(myId)
-        .collection('friends');
+        .collection('friends')
+        .doc(id);
 
-    await snapshot.add({...friends.toJson()});
+    await snapshot.set({...friends.toJson()});
   }
 
-  Future<void> getMyFriends({required String id}) async {
-    final snapshot = await _fireStore
+  Future<List<Friends>> getMyFriends({required String id}) async {
+    final snapshot = _fireStore
         .collection('commands')
         .doc('all')
         .collection('users')
         .doc(id)
-        .collection('friends')
-        .get();
+        .collection('friends');
 
-    final List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
-        snapshot.docs;
+    final data = await snapshot.get();
 
-    documents;
+    final friendsList = data.docs.map((doc) {
+      final data = doc.data();
+      return Friends.fromJson(data);
+    }).toList();
+
+    return friendsList;
   }
 }
