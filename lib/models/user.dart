@@ -1,3 +1,4 @@
+import 'package:chat_app/models/fire_image.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
@@ -9,6 +10,7 @@ class User with _$User {
     @Default('') String id,
     @Default('') String name,
     @Default('') String email,
+    @Default(FireImage()) FireImage profileImage,
   }) = _User;
   const User._();
 

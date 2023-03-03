@@ -1,3 +1,4 @@
+import 'package:chat_app/ui/pages/profile_setting_page/profile_setting_page.dart';
 import 'package:chat_app/ui/themes/theme_text.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class SettingPage extends StatelessWidget {
         buildListItem(
           icon: Icons.person,
           text: 'プロフィール',
-          onTap: () {},
+          onTap: () => Navigator.push(context, SettingProfilePage.route()),
         ),
         buildListItem(
           icon: Icons.notifications,
