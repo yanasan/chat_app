@@ -1,13 +1,9 @@
 import 'package:chat_app/controllers/home_page_controller/home_page_controller.dart';
-import 'package:chat_app/controllers/user_controller/user_controller.dart';
 import 'package:chat_app/models/friends.dart';
 import 'package:chat_app/ui/pages/chat_page/chat_page.dart';
 import 'package:chat_app/ui/themes/app_colors.dart';
 import 'package:chat_app/ui/themes/theme_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutterfire_ui/firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomePage extends StatelessWidget {
@@ -20,45 +16,31 @@ class HomePage extends StatelessWidget {
         title: const Text('ホームページ'),
         automaticallyImplyLeading: false,
       ),
-      body: HookConsumer(
+      body: Consumer(
         builder: (context, ref, child) {
-          final userId =
-              ref.watch(userProvider.select((value) => value.user.id));
-          useEffect(
-            () {
-              ref.read(homePageProvider.notifier).getFriends(userId: userId);
-              return null;
-            },
-            const [],
-          );
+          final friendsList =
+              ref.watch(homePageProvider.select((value) => value.friendslist));
 
-          final query = FirebaseFirestore.instance
-              .collection('commands')
-              .doc('all')
-              .collection('users')
-              .doc(userId)
-              .collection('friends');
-
-          final a = ref.watch(homePageProvider).friends;
-          print(a);
-          return FirestoreListView(
-            query: query,
-            itemBuilder:
-                (BuildContext context, QueryDocumentSnapshot<dynamic> doc) {
-              final data = doc.data();
-              final friends = Friends.fromJson(data);
-              return buildUserList(friends.id);
+          return RefreshIndicator(
+            onRefresh: () async {
+              ref.read(homePageProvider.notifier).init();
             },
+            child: ListView.builder(
+              itemCount: friendsList.length,
+              itemBuilder: (context, index) {
+                final friends = friendsList[index];
+                return buildUserItem(friends: friends);
+              },
+            ),
           );
         },
       ),
     );
   }
 
-  Widget buildUserList(String text) {
+  Widget buildUserItem({required Friends friends}) {
     return Consumer(
       builder: (context, ref, child) {
-        final user = ref.watch(userProvider).user;
         return Column(
           children: [
             Padding(
@@ -85,7 +67,10 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    Black1Text(text, 16),
+                    Black1Text(
+                      friends.name.isEmpty ? 'none' : friends.name,
+                      16,
+                    ),
                   ],
                 ),
               ),

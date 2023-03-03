@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:chat_app/controllers/user_controller/user_controller.dart';
 import 'package:chat_app/models/friends.dart';
+import 'package:chat_app/models/user.dart';
 import 'package:chat_app/service/fire_friends_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,19 +13,29 @@ part 'home_page_controller.freezed.dart';
 class HomePageState with _$HomePageState {
   const factory HomePageState({
     required Query<Map<String, dynamic>> query,
-    @Default([]) List<Friends> friends,
+    @Default([]) List<Friends> friendslist,
   }) = _HomePageState;
 }
 
 final homePageProvider =
     StateNotifierProvider.autoDispose<HomePageController, HomePageState>(
   (ref) {
-    return HomePageController();
+    final user = ref.watch(userProvider.select((value) => value.user));
+    return HomePageController(user: user);
   },
 );
 
 class HomePageController extends StateNotifier<HomePageState> {
-  HomePageController() : super(HomePageState(query: query));
+  HomePageController({required User user})
+      : _user = user,
+        super(HomePageState(query: query)) {
+    init();
+  }
+
+  final User _user;
+  void init() {
+    fetchGetFriends(userId: _user.id);
+  }
 
   Future<void> setFriend({
     required String id,
@@ -39,18 +51,9 @@ class HomePageController extends StateNotifier<HomePageState> {
       .doc('all')
       .collection('users');
 
-  void getFriends({required String userId}) async {
-    final query = FirebaseFirestore.instance
-        .collection('commands')
-        .doc('all')
-        .collection('users')
-        .doc(userId)
-        .collection('friends');
-
-    query.get().then((DocumentSnapshot doc) {
-          final data = doc.data() as Map<String, dynamic>;
-          final friends = Friends.fromJson(data) as List<Friends>;
-          state = state.copyWith(friends: friends);
-        } as FutureOr Function(QuerySnapshot<Map<String, dynamic>> value));
+  Future<void> fetchGetFriends({required String userId}) async {
+    state = state.copyWith(
+      friendslist: await FireFriendsService().getMyFriends(id: userId),
+    );
   }
 }
