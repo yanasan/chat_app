@@ -33,7 +33,9 @@ class SettingProfilePageController
   }
 
   void init() async {
+    print('あ');
     final user = await FireUserService().fetchUser(id: state.user.id);
+    print(user);
     if (user != null) {
       state = state.copyWith(user: user);
     }

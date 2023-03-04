@@ -146,12 +146,12 @@ class _SettingProfilePage extends HookConsumerWidget {
 
   Widget buildSettingProfileTextField({
     required String hintText,
-    required String initialValue,
+    required TextEditingController controller,
     required void Function(String value) onChanged,
     String? Function(String? value)? validator,
   }) {
     return TextFormField(
-      initialValue: initialValue,
+      controller: controller,
       decoration: InputDecoration(
         hintText: hintText,
       ),
@@ -166,9 +166,6 @@ class _SettingProfilePage extends HookConsumerWidget {
     return HookConsumer(
       builder: (context, ref, child) {
         final formKey = useMemoized(GlobalKey<FormState>.new, const []);
-        final user =
-            ref.watch(settingProfilePageProvider.select((value) => value.user));
-
         useEffect(
           () {
             WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -178,13 +175,22 @@ class _SettingProfilePage extends HookConsumerWidget {
           },
           [formKey],
         );
+        final nameController = useTextEditingController();
+        ref.listen(settingProfilePageProvider.select((value) => value.user),
+            (previous, user) {
+          nameController
+            ..text = user.name
+            ..selection = TextSelection.fromPosition(
+              TextPosition(offset: nameController.text.length),
+            );
+        });
 
         return Form(
           key: formKey,
           child: Column(
             children: [
               buildSettingProfileTextField(
-                initialValue: user.name,
+                controller: nameController,
                 hintText: '名前を入力',
                 onChanged:
                     ref.read(settingProfilePageProvider.notifier).setUserName,

@@ -1,5 +1,6 @@
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/service/fire_user_service.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
@@ -26,14 +27,18 @@ class UserController extends StateNotifier<UserState> {
     state = state.copyWith(user: state.user.copyWith(id: id));
   }
 
-  Future<void> setUser() async {
-    final id = _auth.currentUser!.uid;
-    final setUser = await FireUserService().setUser(id: id);
-    return setUser;
-  }
+  Future<void> createUser() async {
+    var currentUser = _auth.currentUser;
+    final uid = currentUser?.uid;
 
-  Future<void> Function() getUser() {
-    final getUser = FireUserService().getAllUser;
-    return getUser;
+    if (uid == null) return;
+
+    if (!await FireUserService().isExisted(id: uid)) {
+      await FireUserService().createUser(id: uid);
+    }
+    final user = await FireUserService().fetchUser(id: uid);
+    if (user != null) {
+      state = state.copyWith(user: user);
+    }
   }
 }

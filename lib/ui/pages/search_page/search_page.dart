@@ -21,21 +21,15 @@ class SearchPage extends HookConsumerWidget {
       ),
       body: HookConsumer(
         builder: (context, ref, child) {
-          final query = ref.watch(searchPageProvider).query;
-          final id = ref.watch(userProvider).user.id;
-          return FirestoreListView(
-            query: query,
-            itemBuilder:
-                (BuildContext context, QueryDocumentSnapshot<dynamic> doc) {
-              final data = doc.data();
-              final user = User.fromJson(data);
-              return user.id == id
-                  ? Container()
-                  : buildUserCard(
-                      id: user.id,
-                      name: user.name == '' ? 'Gest User' : user.name,
-                      description: '私は食事することが好きです',
-                    );
+          final userList =
+              ref.watch(searchPageProvider.select((value) => value.userList));
+          print(userList);
+
+          return ListView.builder(
+            itemCount: userList.length,
+            itemBuilder: (context, index) {
+              final users = userList[index];
+              return buildUserCard(users: users);
             },
           );
         },
@@ -43,11 +37,7 @@ class SearchPage extends HookConsumerWidget {
     );
   }
 
-  Widget buildUserCard({
-    required String id,
-    required String name,
-    required String description,
-  }) {
+  Widget buildUserCard({required User users}) {
     return Consumer(
       builder: (context, ref, child) {
         return Container(
@@ -59,16 +49,16 @@ class SearchPage extends HookConsumerWidget {
           ),
           child: Column(
             children: [
-              buildCardTab(text: id, title: 'id'),
-              buildCardTab(text: name, title: '名前'),
-              buildCardTab(text: description, title: '紹介'),
+              buildCardTab(text: users.id, title: 'id'),
+              buildCardTab(text: users.name, title: '名前'),
+              buildCardTab(text: 'まだ', title: '紹介'),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                 onPressed: () {
                   final myId = ref.watch(userProvider).user.id;
                   ref
                       .watch(searchPageProvider.notifier)
-                      .setFriend(id: id, myId: myId);
+                      .setFriend(id: users.id, myId: myId);
                   ElevatedButton.styleFrom(backgroundColor: AppColors.primaly);
                 },
                 child: const Black1Text('友達追加', 16),
