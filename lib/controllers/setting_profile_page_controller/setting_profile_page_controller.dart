@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chat_app/controllers/user_controller/user_controller.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/service/fire_image_service.dart';
+import 'package:chat_app/service/fire_user_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -27,10 +28,23 @@ final settingProfilePageProvider = StateNotifierProvider.autoDispose<
 class SettingProfilePageController
     extends StateNotifier<SettingProfilePageState> {
   SettingProfilePageController({required User user})
-      : super(SettingProfilePageState(user: user));
+      : super(SettingProfilePageState(user: user)) {
+    init();
+  }
+
+  void init() async {
+    final user = await FireUserService().fetchUser(id: state.user.id);
+    if (user != null) {
+      state = state.copyWith(user: user);
+    }
+  }
 
   void setUserName(String value) =>
       state = state.copyWith(user: state.user.copyWith(name: value));
+
+  void setFile(File file) {
+    state = state.copyWith(file: file);
+  }
 
   Future<void> submit() async {
     if (state.file != null) {
@@ -43,5 +57,6 @@ class SettingProfilePageController
         ),
       );
     }
+    await FireUserService().updateUser(user: state.user);
   }
 }

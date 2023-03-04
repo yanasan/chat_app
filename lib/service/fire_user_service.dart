@@ -31,4 +31,31 @@ class FireUserService {
 
     documents;
   }
+
+  Future<User?> fetchUser({required String id}) async {
+    final docSnapshot = await _fireStore
+        .collection('commands')
+        .doc('all')
+        .collection('users')
+        .doc(id)
+        .get();
+
+    final data = docSnapshot.data();
+    if (data != null) {
+      return User.fromJson(data);
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> updateUser({required User user}) async {
+    await _fireStore
+        .collection('commands')
+        .doc('all')
+        .collection('users')
+        .doc(user.id)
+        .update({
+      ...user.toJson(),
+    });
+  }
 }

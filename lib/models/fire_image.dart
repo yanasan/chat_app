@@ -5,6 +5,7 @@ part 'fire_image.g.dart';
 
 @freezed
 class FireImage with _$FireImage {
+  @JsonSerializable(explicitToJson: true)
   const factory FireImage({
     @Default('') String ref,
     @Default('') String url,
