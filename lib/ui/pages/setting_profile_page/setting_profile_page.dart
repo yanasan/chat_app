@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chat_app/controllers/setting_profile_page_controller/setting_profile_page_controller.dart';
+import 'package:chat_app/models/user.dart';
 import 'package:chat_app/ui/themes/app_colors.dart';
 import 'package:chat_app/ui/themes/theme_text.dart';
 import 'package:flutter/material.dart';
@@ -90,9 +91,8 @@ class _SettingProfilePage extends HookConsumerWidget {
   Widget buildSettingProfileImage() {
     return HookConsumer(
       builder: (context, ref, child) {
-        final user = ref.watch(
-          settingProfilePageProvider.select((value) => value.user),
-        );
+        final user =
+            ref.watch(settingProfilePageProvider.select((value) => value.user));
         final file = ref.watch(
           settingProfilePageProvider.select((value) => value.file),
         );
@@ -166,6 +166,8 @@ class _SettingProfilePage extends HookConsumerWidget {
     return HookConsumer(
       builder: (context, ref, child) {
         final formKey = useMemoized(GlobalKey<FormState>.new, const []);
+        final user =
+            ref.watch(settingProfilePageProvider.select((value) => value.user));
         useEffect(
           () {
             WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -175,11 +177,11 @@ class _SettingProfilePage extends HookConsumerWidget {
           },
           [formKey],
         );
-        final nameController = useTextEditingController();
+        final nameController = useTextEditingController(text: user.name);
         ref.listen(settingProfilePageProvider.select((value) => value.user),
-            (previous, user) {
+            (previous, next) {
           nameController
-            ..text = user.name
+            ..text = next.name
             ..selection = TextSelection.fromPosition(
               TextPosition(offset: nameController.text.length),
             );

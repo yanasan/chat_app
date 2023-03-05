@@ -1,6 +1,5 @@
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/service/fire_user_service.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;

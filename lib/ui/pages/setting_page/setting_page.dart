@@ -1,9 +1,12 @@
-import 'package:chat_app/ui/pages/profile_setting_page/profile_setting_page.dart';
+import 'package:chat_app/models/user.dart';
+import 'package:chat_app/ui/pages/setting_profile_page/setting_profile_page.dart';
 import 'package:chat_app/ui/themes/theme_text.dart';
 import 'package:flutter/material.dart';
 
 class SettingPage extends StatelessWidget {
-  const SettingPage({super.key});
+  const SettingPage({super.key, required this.user});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
