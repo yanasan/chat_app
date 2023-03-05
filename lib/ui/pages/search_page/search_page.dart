@@ -3,7 +3,6 @@ import 'package:chat_app/models/user.dart';
 import 'package:chat_app/ui/themes/app_colors.dart';
 import 'package:chat_app/ui/themes/theme_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../controllers/serach_page_controller/search_page_controller.dart';
@@ -15,13 +14,6 @@ class SearchPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    useEffect(
-      () {
-        ref.read(searchPageProvider.notifier).init();
-        return () {};
-      },
-      [],
-    );
     return Scaffold(
       appBar: AppBar(
         title: const WhiteText('友人追加ページ', 20),
@@ -31,12 +23,20 @@ class SearchPage extends HookConsumerWidget {
         builder: (context, ref, child) {
           final userList =
               ref.watch(searchPageProvider.select((value) => value.userList));
-          return ListView.builder(
-            itemCount: userList.length,
-            itemBuilder: (context, index) {
-              final users = userList[index];
-              return buildUserCard(users: users);
+
+          return RefreshIndicator(
+            onRefresh: () async {
+              ref.read(searchPageProvider.notifier).init();
             },
+            child: userList.isEmpty
+                ? Container()
+                : ListView.builder(
+                    itemCount: userList.length,
+                    itemBuilder: (context, index) {
+                      final users = userList[index];
+                      return buildUserCard(users: users);
+                    },
+                  ),
           );
         },
       ),

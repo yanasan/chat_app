@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:chat_app/controllers/setting_profile_page_controller/setting_profile_page_controller.dart';
-import 'package:chat_app/models/user.dart';
 import 'package:chat_app/ui/themes/app_colors.dart';
 import 'package:chat_app/ui/themes/theme_text.dart';
 import 'package:flutter/material.dart';
