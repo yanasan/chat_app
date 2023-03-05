@@ -1,3 +1,4 @@
+import 'package:chat_app/models/fire_image.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
@@ -5,10 +6,12 @@ part 'user.g.dart';
 
 @freezed
 class User with _$User {
+  @JsonSerializable(explicitToJson: true)
   const factory User({
     @Default('') String id,
     @Default('') String name,
     @Default('') String email,
+    @Default(FireImage()) FireImage profileImage,
   }) = _User;
   const User._();
 

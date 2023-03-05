@@ -16,9 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SearchPageState {
-  User get user => throw _privateConstructorUsedError;
+  List<User> get userList => throw _privateConstructorUsedError;
   List<Friends> get friends => throw _privateConstructorUsedError;
-  Query<Map<String, dynamic>> get query => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SearchPageStateCopyWith<SearchPageState> get copyWith =>
@@ -31,10 +30,7 @@ abstract class $SearchPageStateCopyWith<$Res> {
           SearchPageState value, $Res Function(SearchPageState) then) =
       _$SearchPageStateCopyWithImpl<$Res, SearchPageState>;
   @useResult
-  $Res call(
-      {User user, List<Friends> friends, Query<Map<String, dynamic>> query});
-
-  $UserCopyWith<$Res> get user;
+  $Res call({List<User> userList, List<Friends> friends});
 }
 
 /// @nodoc
@@ -50,32 +46,19 @@ class _$SearchPageStateCopyWithImpl<$Res, $Val extends SearchPageState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = null,
+    Object? userList = null,
     Object? friends = null,
-    Object? query = null,
   }) {
     return _then(_value.copyWith(
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
+      userList: null == userList
+          ? _value.userList
+          : userList // ignore: cast_nullable_to_non_nullable
+              as List<User>,
       friends: null == friends
           ? _value.friends
           : friends // ignore: cast_nullable_to_non_nullable
               as List<Friends>,
-      query: null == query
-          ? _value.query
-          : query // ignore: cast_nullable_to_non_nullable
-              as Query<Map<String, dynamic>>,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value) as $Val);
-    });
   }
 }
 
@@ -87,11 +70,7 @@ abstract class _$$_SearchPageStateCopyWith<$Res>
       __$$_SearchPageStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {User user, List<Friends> friends, Query<Map<String, dynamic>> query});
-
-  @override
-  $UserCopyWith<$Res> get user;
+  $Res call({List<User> userList, List<Friends> friends});
 }
 
 /// @nodoc
@@ -105,23 +84,18 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = null,
+    Object? userList = null,
     Object? friends = null,
-    Object? query = null,
   }) {
     return _then(_$_SearchPageState(
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
+      userList: null == userList
+          ? _value._userList
+          : userList // ignore: cast_nullable_to_non_nullable
+              as List<User>,
       friends: null == friends
           ? _value._friends
           : friends // ignore: cast_nullable_to_non_nullable
               as List<Friends>,
-      query: null == query
-          ? _value.query
-          : query // ignore: cast_nullable_to_non_nullable
-              as Query<Map<String, dynamic>>,
     ));
   }
 }
@@ -130,14 +104,20 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
 
 class _$_SearchPageState implements _SearchPageState {
   const _$_SearchPageState(
-      {this.user = const User(),
-      final List<Friends> friends = const [],
-      required this.query})
-      : _friends = friends;
+      {final List<User> userList = const [],
+      final List<Friends> friends = const []})
+      : _userList = userList,
+        _friends = friends;
 
+  final List<User> _userList;
   @override
   @JsonKey()
-  final User user;
+  List<User> get userList {
+    if (_userList is EqualUnmodifiableListView) return _userList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_userList);
+  }
+
   final List<Friends> _friends;
   @override
   @JsonKey()
@@ -148,11 +128,8 @@ class _$_SearchPageState implements _SearchPageState {
   }
 
   @override
-  final Query<Map<String, dynamic>> query;
-
-  @override
   String toString() {
-    return 'SearchPageState(user: $user, friends: $friends, query: $query)';
+    return 'SearchPageState(userList: $userList, friends: $friends)';
   }
 
   @override
@@ -160,14 +137,15 @@ class _$_SearchPageState implements _SearchPageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SearchPageState &&
-            (identical(other.user, user) || other.user == user) &&
-            const DeepCollectionEquality().equals(other._friends, _friends) &&
-            (identical(other.query, query) || other.query == query));
+            const DeepCollectionEquality().equals(other._userList, _userList) &&
+            const DeepCollectionEquality().equals(other._friends, _friends));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, user, const DeepCollectionEquality().hash(_friends), query);
+      runtimeType,
+      const DeepCollectionEquality().hash(_userList),
+      const DeepCollectionEquality().hash(_friends));
 
   @JsonKey(ignore: true)
   @override
@@ -178,16 +156,13 @@ class _$_SearchPageState implements _SearchPageState {
 
 abstract class _SearchPageState implements SearchPageState {
   const factory _SearchPageState(
-      {final User user,
-      final List<Friends> friends,
-      required final Query<Map<String, dynamic>> query}) = _$_SearchPageState;
+      {final List<User> userList,
+      final List<Friends> friends}) = _$_SearchPageState;
 
   @override
-  User get user;
+  List<User> get userList;
   @override
   List<Friends> get friends;
-  @override
-  Query<Map<String, dynamic>> get query;
   @override
   @JsonKey(ignore: true)
   _$$_SearchPageStateCopyWith<_$_SearchPageState> get copyWith =>

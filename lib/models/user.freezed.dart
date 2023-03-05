@@ -23,6 +23,7 @@ mixin _$User {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  FireImage get profileImage => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,9 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({String id, String name, String email});
+  $Res call({String id, String name, String email, FireImage profileImage});
+
+  $FireImageCopyWith<$Res> get profileImage;
 }
 
 /// @nodoc
@@ -53,6 +56,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? id = null,
     Object? name = null,
     Object? email = null,
+    Object? profileImage = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -67,7 +71,19 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      profileImage: null == profileImage
+          ? _value.profileImage
+          : profileImage // ignore: cast_nullable_to_non_nullable
+              as FireImage,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $FireImageCopyWith<$Res> get profileImage {
+    return $FireImageCopyWith<$Res>(_value.profileImage, (value) {
+      return _then(_value.copyWith(profileImage: value) as $Val);
+    });
   }
 }
 
@@ -77,7 +93,10 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$_UserCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String email});
+  $Res call({String id, String name, String email, FireImage profileImage});
+
+  @override
+  $FireImageCopyWith<$Res> get profileImage;
 }
 
 /// @nodoc
@@ -92,6 +111,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? id = null,
     Object? name = null,
     Object? email = null,
+    Object? profileImage = null,
   }) {
     return _then(_$_User(
       id: null == id
@@ -106,14 +126,24 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      profileImage: null == profileImage
+          ? _value.profileImage
+          : profileImage // ignore: cast_nullable_to_non_nullable
+              as FireImage,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$_User extends _User {
-  const _$_User({this.id = '', this.name = '', this.email = ''}) : super._();
+  const _$_User(
+      {this.id = '',
+      this.name = '',
+      this.email = '',
+      this.profileImage = const FireImage()})
+      : super._();
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -126,10 +156,13 @@ class _$_User extends _User {
   @override
   @JsonKey()
   final String email;
+  @override
+  @JsonKey()
+  final FireImage profileImage;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email)';
+    return 'User(id: $id, name: $name, email: $email, profileImage: $profileImage)';
   }
 
   @override
@@ -139,12 +172,14 @@ class _$_User extends _User {
             other is _$_User &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.profileImage, profileImage) ||
+                other.profileImage == profileImage));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, email);
+  int get hashCode => Object.hash(runtimeType, id, name, email, profileImage);
 
   @JsonKey(ignore: true)
   @override
@@ -162,7 +197,10 @@ class _$_User extends _User {
 
 abstract class _User extends User {
   const factory _User(
-      {final String id, final String name, final String email}) = _$_User;
+      {final String id,
+      final String name,
+      final String email,
+      final FireImage profileImage}) = _$_User;
   const _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
@@ -173,6 +211,8 @@ abstract class _User extends User {
   String get name;
   @override
   String get email;
+  @override
+  FireImage get profileImage;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

@@ -1,14 +1,12 @@
+import 'package:chat_app/models/user.dart';
+import 'package:chat_app/ui/pages/setting_profile_page/setting_profile_page.dart';
+import 'package:chat_app/ui/themes/theme_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
-
-final _dateTimeProvider = StateProvider.autoDispose<DateTime?>((ref) {
-  return DateTime.now();
-});
 
 class SettingPage extends StatelessWidget {
-  const SettingPage({super.key});
+  const SettingPage({super.key, required this.user});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -17,45 +15,56 @@ class SettingPage extends StatelessWidget {
         title: const Text('設定'),
         automaticallyImplyLeading: false,
       ),
-      body: Consumer(
-        builder: (context, ref, child) {
-          return Container(
-            child: buildTimeField(),
-          );
-        },
+      body: Column(
+        children: [
+          buildPersonalSettings(context),
+        ],
       ),
     );
   }
 
-  Widget buildTimeField() {
-    return Consumer(
-      builder: (context, ref, child) {
-        var dateTime = ref.watch(_dateTimeProvider);
-        final formatter = DateFormat('yyyy年MM月dd日H:m');
-        return GestureDetector(
-          onTap: () {
-            DatePicker.showDateTimePicker(
-              context,
-              locale: LocaleType.jp,
-              onConfirm: (time) {
-                // limit.value = time;
-                dateTime = time;
-                print('$time');
-              },
-              currentTime: DateTime.now(),
-              showTitleActions: true,
-            );
-          },
-          child: Container(
-            height: 60,
-            width: 600,
-            decoration: const BoxDecoration(
-              border: Border(bottom: BorderSide()),
+  Widget buildPersonalSettings(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Gray1Text('個人情報', 14),
+        buildListItem(
+          icon: Icons.person,
+          text: 'プロフィール',
+          onTap: () => Navigator.push(context, SettingProfilePage.route()),
+        ),
+        buildListItem(
+          icon: Icons.notifications,
+          text: '通知設定',
+          onTap: () {},
+        ),
+      ],
+    );
+  }
+
+  Widget buildListItem({
+    required IconData icon,
+    required String text,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: SizedBox(
+        height: 40,
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              size: 32,
             ),
-            child: Center(child: Text(formatter.format(dateTime!))),
-          ),
-        );
-      },
+            const SizedBox(width: 15),
+            Black1Text.bold(text, 18),
+            const Spacer(),
+            const Icon(Icons.keyboard_arrow_right_outlined),
+          ],
+        ),
+      ),
     );
   }
 }

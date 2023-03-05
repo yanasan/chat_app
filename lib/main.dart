@@ -2,6 +2,7 @@ import 'package:chat_app/ui/pages/splash_page/splash_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 Future<void> main() async {
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.teal,
       ),
       home: const SplashPage(),
+      builder: EasyLoading.init(),
     );
   }
 }

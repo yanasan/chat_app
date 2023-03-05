@@ -17,14 +17,13 @@ class SplashPage extends StatelessWidget {
           body: Center(
             child: ElevatedButton(
               onPressed: () async {
-                ref.read(userProvider.notifier).setUserId();
-                ref.watch(userProvider.notifier).setUser();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const Rootpage(),
                   ),
                 );
+                await ref.read(userProvider.notifier).createUser();
               },
               child: const WhiteText('ゲストで始める', 16),
             ),

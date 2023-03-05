@@ -25,13 +25,15 @@ class HomePage extends StatelessWidget {
             onRefresh: () async {
               ref.read(homePageProvider.notifier).init();
             },
-            child: ListView.builder(
-              itemCount: friendsList.length,
-              itemBuilder: (context, index) {
-                final friends = friendsList[index];
-                return buildUserItem(friends: friends);
-              },
-            ),
+            child: friendsList.isEmpty
+                ? const Center(child: Gray1Text('あなたに友達はいません', 20))
+                : ListView.builder(
+                    itemCount: friendsList.length,
+                    itemBuilder: (context, index) {
+                      final friends = friendsList[index];
+                      return buildUserItem(friends: friends);
+                    },
+                  ),
           );
         },
       ),
