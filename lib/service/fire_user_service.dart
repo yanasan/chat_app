@@ -44,9 +44,14 @@ class FireUserService {
     }
   }
 
-  Future<List<User>> fetchUserList() async {
-    final snapshot =
-        _fireStore.collection('commands').doc('all').collection('users');
+  Future<List<User>> fetchUserList({
+    required String id,
+  }) async {
+    final snapshot = _fireStore
+        .collection('commands')
+        .doc('all')
+        .collection('users')
+        .where('id', whereNotIn: [id]);
 
     final data = await snapshot.get();
 

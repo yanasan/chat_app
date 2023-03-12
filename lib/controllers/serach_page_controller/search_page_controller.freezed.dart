@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SearchPageState {
   List<User> get userList => throw _privateConstructorUsedError;
-  List<Friends> get friends => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SearchPageStateCopyWith<SearchPageState> get copyWith =>
@@ -30,7 +29,7 @@ abstract class $SearchPageStateCopyWith<$Res> {
           SearchPageState value, $Res Function(SearchPageState) then) =
       _$SearchPageStateCopyWithImpl<$Res, SearchPageState>;
   @useResult
-  $Res call({List<User> userList, List<Friends> friends});
+  $Res call({List<User> userList});
 }
 
 /// @nodoc
@@ -47,17 +46,12 @@ class _$SearchPageStateCopyWithImpl<$Res, $Val extends SearchPageState>
   @override
   $Res call({
     Object? userList = null,
-    Object? friends = null,
   }) {
     return _then(_value.copyWith(
       userList: null == userList
           ? _value.userList
           : userList // ignore: cast_nullable_to_non_nullable
               as List<User>,
-      friends: null == friends
-          ? _value.friends
-          : friends // ignore: cast_nullable_to_non_nullable
-              as List<Friends>,
     ) as $Val);
   }
 }
@@ -70,7 +64,7 @@ abstract class _$$_SearchPageStateCopyWith<$Res>
       __$$_SearchPageStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<User> userList, List<Friends> friends});
+  $Res call({List<User> userList});
 }
 
 /// @nodoc
@@ -85,17 +79,12 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userList = null,
-    Object? friends = null,
   }) {
     return _then(_$_SearchPageState(
       userList: null == userList
           ? _value._userList
           : userList // ignore: cast_nullable_to_non_nullable
               as List<User>,
-      friends: null == friends
-          ? _value._friends
-          : friends // ignore: cast_nullable_to_non_nullable
-              as List<Friends>,
     ));
   }
 }
@@ -103,11 +92,8 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_SearchPageState implements _SearchPageState {
-  const _$_SearchPageState(
-      {final List<User> userList = const [],
-      final List<Friends> friends = const []})
-      : _userList = userList,
-        _friends = friends;
+  const _$_SearchPageState({final List<User> userList = const []})
+      : _userList = userList;
 
   final List<User> _userList;
   @override
@@ -118,18 +104,9 @@ class _$_SearchPageState implements _SearchPageState {
     return EqualUnmodifiableListView(_userList);
   }
 
-  final List<Friends> _friends;
-  @override
-  @JsonKey()
-  List<Friends> get friends {
-    if (_friends is EqualUnmodifiableListView) return _friends;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_friends);
-  }
-
   @override
   String toString() {
-    return 'SearchPageState(userList: $userList, friends: $friends)';
+    return 'SearchPageState(userList: $userList)';
   }
 
   @override
@@ -137,15 +114,12 @@ class _$_SearchPageState implements _SearchPageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SearchPageState &&
-            const DeepCollectionEquality().equals(other._userList, _userList) &&
-            const DeepCollectionEquality().equals(other._friends, _friends));
+            const DeepCollectionEquality().equals(other._userList, _userList));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_userList),
-      const DeepCollectionEquality().hash(_friends));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_userList));
 
   @JsonKey(ignore: true)
   @override
@@ -155,14 +129,11 @@ class _$_SearchPageState implements _SearchPageState {
 }
 
 abstract class _SearchPageState implements SearchPageState {
-  const factory _SearchPageState(
-      {final List<User> userList,
-      final List<Friends> friends}) = _$_SearchPageState;
+  const factory _SearchPageState({final List<User> userList}) =
+      _$_SearchPageState;
 
   @override
   List<User> get userList;
-  @override
-  List<Friends> get friends;
   @override
   @JsonKey(ignore: true)
   _$$_SearchPageStateCopyWith<_$_SearchPageState> get copyWith =>

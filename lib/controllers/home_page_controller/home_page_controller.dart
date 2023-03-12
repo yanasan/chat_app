@@ -30,17 +30,14 @@ class HomePageController extends StateNotifier<HomePageState> {
 
   final User _user;
 
-  Future<void> setFriend({
-    required String id,
-    required String myId,
-  }) async {
-    final setFriend = await FireFriendsService().setFrends(id: id, myId: myId);
-    return setFriend;
-  }
-
   void init() async {
     state = state.copyWith(
       friendslist: await FireFriendsService().getMyFriends(id: _user.id),
     );
+  }
+
+  Future<void> updateFriends({required String id}) async {
+    await FireFriendsService()
+        .updateFrends(id: id, myId: _user.id, name: _user.name);
   }
 }

@@ -9,9 +9,11 @@ class FireFriendsService {
   Future<void> setFrends({
     required String id,
     required String myId,
+    required String name,
   }) async {
     final friends = Friends(
       id: id,
+      name: name,
     );
     final snapshot = _fireStore
         .collection('commands')
@@ -22,6 +24,25 @@ class FireFriendsService {
         .doc(id);
 
     await snapshot.set({...friends.toJson()});
+  }
+
+  Future<void> updateFrends({
+    required String id,
+    required String myId,
+    required String name,
+  }) async {
+    final friends = Friends(
+      name: name,
+    );
+    final snapshot = _fireStore
+        .collection('commands')
+        .doc('all')
+        .collection('users')
+        .doc(myId)
+        .collection('friends')
+        .doc(id);
+
+    await snapshot.update({...friends.toJson()});
   }
 
   Future<List<Friends>> getMyFriends({required String id}) async {

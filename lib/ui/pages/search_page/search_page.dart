@@ -1,4 +1,3 @@
-import 'package:chat_app/controllers/user_controller/user_controller.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/ui/themes/app_colors.dart';
 import 'package:chat_app/ui/themes/theme_text.dart';
@@ -28,15 +27,15 @@ class SearchPage extends HookConsumerWidget {
             onRefresh: () async {
               ref.read(searchPageProvider.notifier).init();
             },
-            child: userList.isEmpty
-                ? Container()
-                : ListView.builder(
-                    itemCount: userList.length,
-                    itemBuilder: (context, index) {
-                      final users = userList[index];
-                      return buildUserCard(users: users);
-                    },
-                  ),
+            child: ListView.builder(
+              itemCount: userList.length,
+              itemBuilder: (context, index) {
+                final users = userList[index];
+                return users.id == user.id
+                    ? Container()
+                    : buildUserCard(users: users);
+              },
+            ),
           );
         },
       ),
@@ -61,10 +60,9 @@ class SearchPage extends HookConsumerWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                 onPressed: () {
-                  final myId = ref.watch(userProvider).user.id;
                   ref
                       .watch(searchPageProvider.notifier)
-                      .setFriend(id: users.id, myId: myId);
+                      .setFriend(id: users.id);
                   ElevatedButton.styleFrom(backgroundColor: AppColors.primaly);
                 },
                 child: const Black1Text('友達追加', 16),
