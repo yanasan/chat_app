@@ -10,7 +10,7 @@ class User with _$User {
   const factory User({
     @Default('') String id,
     @Default('') String name,
-    @Default('') String email,
+    @Default('') String description,
     @Default(FireImage()) FireImage profileImage,
   }) = _User;
   const User._();

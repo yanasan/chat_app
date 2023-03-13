@@ -22,9 +22,7 @@ class HomePage extends StatelessWidget {
               ref.watch(homePageProvider.select((value) => value.friendslist));
 
           return RefreshIndicator(
-            onRefresh: () async {
-              ref.read(homePageProvider.notifier).init();
-            },
+            onRefresh: () async {},
             child: ListView.builder(
               itemCount: friendsList.length,
               itemBuilder: (context, index) {

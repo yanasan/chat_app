@@ -24,24 +24,23 @@ final searchPageProvider =
 class SearchPageController extends StateNotifier<SearchPageState> {
   SearchPageController({required User user})
       : _user = user,
-        super(const SearchPageState()) {
-    init();
-  }
+        super(const SearchPageState());
   final User _user;
 
-  Future<void> setFriend({
-    required String id,
-  }) async {
-    final setFriend = await FireFriendsService()
-        .setFrends(id: id, myId: _user.id, name: _user.name);
+  // Future<void> setFriend({
+  //   required String id,
+  // }) async {
+  //   final friendsData = await FireUserService().fetchUser(id: id);
+  //   if (friendsData == null) return;
+  //   final setFriend = await FireFriendsService()
+  //       .setFriends(id: id, myId: _user.id, name: friendsData.name);
+  //   return setFriend;
+  // }
 
-    return setFriend;
-  }
-
-  void init() async {
-    final userList = await FireUserService().fetchUserList(id: _user.id);
-    state = state.copyWith(
-      userList: userList,
-    );
-  }
+  // void init() async {
+  //   final userList = await FireUserService().fetchUserList(id: _user.id);
+  //   state = state.copyWith(
+  //     userList: userList,
+  //   );
+  // }
 }

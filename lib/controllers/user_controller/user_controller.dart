@@ -21,11 +21,6 @@ class UserController extends StateNotifier<UserState> {
 
   final _auth = firebase.FirebaseAuth.instance;
 
-  void setUserId() async {
-    final id = _auth.currentUser!.uid;
-    state = state.copyWith(user: state.user.copyWith(id: id));
-  }
-
   Future<void> createUser() async {
     var currentUser = _auth.currentUser;
     final uid = currentUser?.uid;

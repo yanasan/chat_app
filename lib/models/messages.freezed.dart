@@ -21,7 +21,7 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Message {
   String get userId => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  String get message => throw _privateConstructorUsedError;
   @FireTimestampConverterNonNull()
   DateTime get created => throw _privateConstructorUsedError;
 
@@ -37,7 +37,7 @@ abstract class $MessageCopyWith<$Res> {
   @useResult
   $Res call(
       {String userId,
-      String description,
+      String message,
       @FireTimestampConverterNonNull() DateTime created});
 }
 
@@ -55,7 +55,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   @override
   $Res call({
     Object? userId = null,
-    Object? description = null,
+    Object? message = null,
     Object? created = null,
   }) {
     return _then(_value.copyWith(
@@ -63,9 +63,9 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String,
       created: null == created
           ? _value.created
@@ -84,7 +84,7 @@ abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
   @useResult
   $Res call(
       {String userId,
-      String description,
+      String message,
       @FireTimestampConverterNonNull() DateTime created});
 }
 
@@ -99,7 +99,7 @@ class __$$_MessageCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userId = null,
-    Object? description = null,
+    Object? message = null,
     Object? created = null,
   }) {
     return _then(_$_Message(
@@ -107,9 +107,9 @@ class __$$_MessageCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String,
       created: null == created
           ? _value.created
@@ -124,7 +124,7 @@ class __$$_MessageCopyWithImpl<$Res>
 class _$_Message extends _Message {
   const _$_Message(
       {this.userId = '',
-      this.description = '',
+      this.message = '',
       @FireTimestampConverterNonNull() required this.created})
       : super._();
 
@@ -136,14 +136,14 @@ class _$_Message extends _Message {
   final String userId;
   @override
   @JsonKey()
-  final String description;
+  final String message;
   @override
   @FireTimestampConverterNonNull()
   final DateTime created;
 
   @override
   String toString() {
-    return 'Message(userId: $userId, description: $description, created: $created)';
+    return 'Message(userId: $userId, message: $message, created: $created)';
   }
 
   @override
@@ -152,14 +152,13 @@ class _$_Message extends _Message {
         (other.runtimeType == runtimeType &&
             other is _$_Message &&
             (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.message, message) || other.message == message) &&
             (identical(other.created, created) || other.created == created));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userId, description, created);
+  int get hashCode => Object.hash(runtimeType, userId, message, created);
 
   @JsonKey(ignore: true)
   @override
@@ -178,7 +177,7 @@ class _$_Message extends _Message {
 abstract class _Message extends Message {
   const factory _Message(
           {final String userId,
-          final String description,
+          final String message,
           @FireTimestampConverterNonNull() required final DateTime created}) =
       _$_Message;
   const _Message._() : super._();
@@ -188,7 +187,7 @@ abstract class _Message extends Message {
   @override
   String get userId;
   @override
-  String get description;
+  String get message;
   @override
   @FireTimestampConverterNonNull()
   DateTime get created;

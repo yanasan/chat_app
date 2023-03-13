@@ -46,7 +46,7 @@ class _SettingProfilePage extends HookConsumerWidget {
                   children: [
                     buildSettingProfileImage(),
                     const SizedBox(height: 40),
-                    buildSettingProfileText(),
+                    // buildSettingProfileText(),
                   ],
                 ),
               ),
@@ -60,16 +60,12 @@ class _SettingProfilePage extends HookConsumerWidget {
   Widget buildSubmitButton() {
     return Consumer(
       builder: (context, ref, _) {
-        final formKey = ref.watch(_formKeyProvider);
         return GestureDetector(
           onTap: () async {
             FocusScope.of(context).unfocus();
-            final formState = formKey?.currentState;
-            if (formState != null && formState.validate()) {
-              await EasyLoading.show();
-              await ref.read(settingProfilePageProvider.notifier).submit();
-              await EasyLoading.dismiss();
-            }
+            await EasyLoading.show();
+            await ref.read(settingProfilePageProvider.notifier).submit();
+            await EasyLoading.dismiss();
           },
           child: const Center(
             child: Padding(
@@ -142,67 +138,75 @@ class _SettingProfilePage extends HookConsumerWidget {
     );
   }
 
-  Widget buildSettingProfileTextField({
-    required String hintText,
-    required TextEditingController controller,
-    required void Function(String value) onChanged,
-    String? Function(String? value)? validator,
-  }) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        hintText: hintText,
-      ),
-      validator: validator,
-      onChanged: (value) {
-        onChanged(value);
-      },
-    );
-  }
+  // Widget buildSettingProfileTextField({
+  //   required String hintText,
+  //   required String initialValue,
+  //   // required TextEditingController controller,
+  //   required void Function(String value) onChanged,
+  //   String? Function(String? value)? validator,
+  // }) {
+  //   return TextFormField(
+  //     // controller: controller,
+  //     decoration: InputDecoration(
+  //       hintText: hintText,
+  //     ),
+  //     validator: validator,
+  //     initialValue: initialValue,
+  //     onChanged: (value) {
+  //       onChanged(value);
+  //     },
+  //   );
+  // }
 
-  Widget buildSettingProfileText() {
-    return HookConsumer(
-      builder: (context, ref, child) {
-        final formKey = useMemoized(GlobalKey<FormState>.new, const []);
-        final user =
-            ref.watch(settingProfilePageProvider.select((value) => value.user));
-        useEffect(
-          () {
-            WidgetsBinding.instance.addPostFrameCallback((_) async {
-              ref.read(_formKeyProvider.notifier).state = formKey;
-            });
-            return null;
-          },
-          [formKey],
-        );
-        final nameController = useTextEditingController(text: user.name);
-        ref.listen(settingProfilePageProvider.select((value) => value.user),
-            (previous, next) {
-          nameController
-            ..text = next.name
-            ..selection = TextSelection.fromPosition(
-              TextPosition(offset: nameController.text.length),
-            );
-        });
+  // Widget buildSettingProfileText() {
+  //   return HookConsumer(
+  //     builder: (context, ref, child) {
+  //       final user =
+  //           ref.watch(settingProfilePageProvider.select((value) => value.user));
 
-        return Form(
-          key: formKey,
-          child: Column(
-            children: [
-              buildSettingProfileTextField(
-                controller: nameController,
-                hintText: '名前を入力',
-                onChanged:
-                    ref.read(settingProfilePageProvider.notifier).setUserName,
-                validator: validatorRequired,
-              ),
-              const SizedBox(height: 40),
-            ],
-          ),
-        );
-      },
-    );
-  }
+  //       final nameController = useTextEditingController();
+  //       final descriptionController = useTextEditingController();
+  //       // ref.listen(settingProfilePageProvider.select((value) => value.user),
+  //       //     (previous, next) {
+  //       //   nameController
+  //       //     ..text = next.name
+  //       //     ..selection = TextSelection.fromPosition(
+  //       //       TextPosition(offset: nameController.text.length),
+  //       //     );
+  //       //   // descriptionController
+  //       //   //   ..text = next.description
+  //       //   //   ..selection = TextSelection.fromPosition(
+  //       //   //     TextPosition(offset: descriptionController.text.length),
+  //       //   //   );
+  //       // });
+
+  //       return Form(
+  //         child: Column(
+  //           children: [
+  //             buildSettingProfileTextField(
+  //               initialValue: user.name,
+  //               // controller: nameController,
+  //               hintText: '名前を入力',
+  //               onChanged:
+  //                   ref.read(settingProfilePageProvider.notifier).setUserName,
+  //               validator: validatorRequired,
+  //             ),
+  //             const SizedBox(height: 40),
+  //             buildSettingProfileTextField(
+  //               initialValue: user.description,
+  //               // controller: descriptionController,
+  //               hintText: '紹介文を入力',
+  //               onChanged: ref
+  //                   .read(settingProfilePageProvider.notifier)
+  //                   .setDescription,
+  //               validator: validatorRequired,
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   String? validatorRequired(String? value) {
     if (value == null || value.isEmpty) {

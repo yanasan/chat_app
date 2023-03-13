@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FireFriendsService {
   final _fireStore = FirebaseFirestore.instance;
 
-  Future<void> setFrends({
+  Future<void> setFriends({
     required String id,
     required String myId,
     required String name,
@@ -26,7 +26,7 @@ class FireFriendsService {
     await snapshot.set({...friends.toJson()});
   }
 
-  Future<void> updateFrends({
+  Future<void> updateFriends({
     required String id,
     required String myId,
     required String name,

@@ -41,6 +41,8 @@ class SettingProfilePageController
 
   void setUserName(String value) =>
       state = state.copyWith(user: state.user.copyWith(name: value));
+  void setDescription(String value) =>
+      state = state.copyWith(user: state.user.copyWith(description: value));
 
   void setFile(File file) {
     state = state.copyWith(file: file);

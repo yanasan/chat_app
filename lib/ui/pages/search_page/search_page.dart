@@ -24,9 +24,7 @@ class SearchPage extends HookConsumerWidget {
               ref.watch(searchPageProvider.select((value) => value.userList));
 
           return RefreshIndicator(
-            onRefresh: () async {
-              ref.read(searchPageProvider.notifier).init();
-            },
+            onRefresh: () async {},
             child: ListView.builder(
               itemCount: userList.length,
               itemBuilder: (context, index) {
@@ -60,10 +58,10 @@ class SearchPage extends HookConsumerWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                 onPressed: () {
-                  ref
-                      .watch(searchPageProvider.notifier)
-                      .setFriend(id: users.id);
-                  ElevatedButton.styleFrom(backgroundColor: AppColors.primaly);
+                  // ref
+                  //     .watch(searchPageProvider.notifier)
+                  //     .setFriend(id: users.id);
+                  // ElevatedButton.styleFrom(backgroundColor: AppColors.primaly);
                 },
                 child: const Black1Text('友達追加', 16),
               )
