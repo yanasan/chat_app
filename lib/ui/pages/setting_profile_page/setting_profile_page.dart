@@ -4,7 +4,6 @@ import 'package:chat_app/ui/themes/app_colors.dart';
 import 'package:chat_app/ui/themes/theme_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -17,8 +16,7 @@ class SettingProfilePage {
   }
 }
 
-final _formKeyProvider =
-    StateProvider.autoDispose<GlobalKey<FormState>?>((ref) => null);
+final formKey = GlobalKey<FormState>();
 
 class _SettingProfilePage extends HookConsumerWidget {
   @override
@@ -46,7 +44,7 @@ class _SettingProfilePage extends HookConsumerWidget {
                   children: [
                     buildSettingProfileImage(),
                     const SizedBox(height: 40),
-                    // buildSettingProfileText(),
+                    buildTextArea()
                   ],
                 ),
               ),
@@ -62,10 +60,16 @@ class _SettingProfilePage extends HookConsumerWidget {
       builder: (context, ref, _) {
         return GestureDetector(
           onTap: () async {
+            final formState = formKey.currentState;
             FocusScope.of(context).unfocus();
-            await EasyLoading.show();
-            await ref.read(settingProfilePageProvider.notifier).submit();
-            await EasyLoading.dismiss();
+            await EasyLoading.show(status: '保存中...');
+            if (formState != null && formState.validate()) {
+              formState.save();
+              await ref.read(settingProfilePageProvider.notifier).submit();
+              await EasyLoading.showSuccess('保存完了！');
+            } else {
+              await EasyLoading.showError('保存に失敗しました');
+            }
           },
           child: const Center(
             child: Padding(
@@ -138,75 +142,58 @@ class _SettingProfilePage extends HookConsumerWidget {
     );
   }
 
-  // Widget buildSettingProfileTextField({
-  //   required String hintText,
-  //   required String initialValue,
-  //   // required TextEditingController controller,
-  //   required void Function(String value) onChanged,
-  //   String? Function(String? value)? validator,
-  // }) {
-  //   return TextFormField(
-  //     // controller: controller,
-  //     decoration: InputDecoration(
-  //       hintText: hintText,
-  //     ),
-  //     validator: validator,
-  //     initialValue: initialValue,
-  //     onChanged: (value) {
-  //       onChanged(value);
-  //     },
-  //   );
-  // }
+  Widget buildMyTextFields({
+    required String hintText,
+    required TextEditingController controller,
+    required void Function(String value) onSaved,
+    String? Function(String? value)? validator,
+  }) {
+    return TextFormField(
+      decoration: InputDecoration(hintText: hintText),
+      onSaved: (value) {
+        if (value != null) {
+          onSaved(value);
+        }
+      },
+      validator: validator,
+      controller: controller,
+    );
+  }
 
-  // Widget buildSettingProfileText() {
-  //   return HookConsumer(
-  //     builder: (context, ref, child) {
-  //       final user =
-  //           ref.watch(settingProfilePageProvider.select((value) => value.user));
+  Widget buildTextArea() {
+    return Consumer(
+      builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        final user =
+            ref.watch(settingProfilePageProvider.select((value) => value.user));
+        final nameController = TextEditingController(text: user.name);
+        final descriptionController =
+            TextEditingController(text: user.description);
 
-  //       final nameController = useTextEditingController();
-  //       final descriptionController = useTextEditingController();
-  //       // ref.listen(settingProfilePageProvider.select((value) => value.user),
-  //       //     (previous, next) {
-  //       //   nameController
-  //       //     ..text = next.name
-  //       //     ..selection = TextSelection.fromPosition(
-  //       //       TextPosition(offset: nameController.text.length),
-  //       //     );
-  //       //   // descriptionController
-  //       //   //   ..text = next.description
-  //       //   //   ..selection = TextSelection.fromPosition(
-  //       //   //     TextPosition(offset: descriptionController.text.length),
-  //       //   //   );
-  //       // });
-
-  //       return Form(
-  //         child: Column(
-  //           children: [
-  //             buildSettingProfileTextField(
-  //               initialValue: user.name,
-  //               // controller: nameController,
-  //               hintText: '名前を入力',
-  //               onChanged:
-  //                   ref.read(settingProfilePageProvider.notifier).setUserName,
-  //               validator: validatorRequired,
-  //             ),
-  //             const SizedBox(height: 40),
-  //             buildSettingProfileTextField(
-  //               initialValue: user.description,
-  //               // controller: descriptionController,
-  //               hintText: '紹介文を入力',
-  //               onChanged: ref
-  //                   .read(settingProfilePageProvider.notifier)
-  //                   .setDescription,
-  //               validator: validatorRequired,
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
+        return Form(
+          key: formKey,
+          child: Column(
+            children: [
+              buildMyTextFields(
+                controller: nameController,
+                hintText: '名前を入力',
+                onSaved:
+                    ref.read(settingProfilePageProvider.notifier).setUserName,
+                validator: validatorRequired,
+              ),
+              const SizedBox(height: 40),
+              buildMyTextFields(
+                hintText: '自己紹介を入力',
+                controller: descriptionController,
+                onSaved: ref
+                    .read(settingProfilePageProvider.notifier)
+                    .setDescription,
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   String? validatorRequired(String? value) {
     if (value == null || value.isEmpty) {
