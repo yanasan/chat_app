@@ -4,6 +4,7 @@ import 'package:chat_app/ui/themes/app_colors.dart';
 import 'package:chat_app/ui/themes/theme_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -143,20 +144,36 @@ class _SettingProfilePage extends HookConsumerWidget {
   }
 
   Widget buildMyTextFields({
+    required String initValue,
     required String hintText,
-    required TextEditingController controller,
     required void Function(String value) onSaved,
     String? Function(String? value)? validator,
   }) {
-    return TextFormField(
-      decoration: InputDecoration(hintText: hintText),
-      onSaved: (value) {
-        if (value != null) {
-          onSaved(value);
-        }
+    return HookBuilder(
+      builder: (context) {
+        final controller = useTextEditingController();
+        useEffect(
+          () {
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              controller.text = initValue;
+            });
+
+            return null;
+          },
+          [initValue],
+        );
+        return TextFormField(
+          decoration: InputDecoration(hintText: hintText),
+          onSaved: (value) {
+            if (value != null) {
+              onSaved(value);
+            }
+          },
+          validator: validator,
+          controller: controller,
+          initialValue: initValue,
+        );
       },
-      validator: validator,
-      controller: controller,
     );
   }
 
@@ -165,16 +182,13 @@ class _SettingProfilePage extends HookConsumerWidget {
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         final user =
             ref.watch(settingProfilePageProvider.select((value) => value.user));
-        final nameController = TextEditingController(text: user.name);
-        final descriptionController =
-            TextEditingController(text: user.description);
 
         return Form(
           key: formKey,
           child: Column(
             children: [
               buildMyTextFields(
-                controller: nameController,
+                initValue: user.name,
                 hintText: '名前を入力',
                 onSaved:
                     ref.read(settingProfilePageProvider.notifier).setUserName,
@@ -182,8 +196,8 @@ class _SettingProfilePage extends HookConsumerWidget {
               ),
               const SizedBox(height: 40),
               buildMyTextFields(
+                initValue: user.description,
                 hintText: '自己紹介を入力',
-                controller: descriptionController,
                 onSaved: ref
                     .read(settingProfilePageProvider.notifier)
                     .setDescription,

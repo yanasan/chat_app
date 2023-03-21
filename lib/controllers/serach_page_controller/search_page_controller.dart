@@ -1,6 +1,4 @@
 import 'package:chat_app/controllers/user_controller/user_controller.dart';
-import 'package:chat_app/service/fire_friends_service.dart';
-import 'package:chat_app/service/fire_user_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod/riverpod.dart';
 import '../../models/user.dart';

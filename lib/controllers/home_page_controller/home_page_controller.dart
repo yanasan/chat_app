@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'package:chat_app/controllers/user_controller/user_controller.dart';
 import 'package:chat_app/models/friends.dart';
 import 'package:chat_app/models/user.dart';
-import 'package:chat_app/service/fire_friends_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -29,10 +27,4 @@ class HomePageController extends StateNotifier<HomePageState> {
         super(const HomePageState());
 
   final User _user;
-
-  // void init() async {
-  //   state = state.copyWith(
-  //     friendslist: await FireFriendsService().getMyFriends(id: _user.id),
-  //   );
-  // }
 }
