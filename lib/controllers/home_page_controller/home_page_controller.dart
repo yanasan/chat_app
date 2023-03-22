@@ -37,22 +37,15 @@ class HomePageController extends StateNotifier<HomePageState> {
     featchHomePaga();
   }
 
-  Future<List<User>> featchFriendsData() async {
+  Future<void> featchHomePaga() async {
+    final friendsList = await FireFriendsService().getMyFriends(id: _user.id);
     final friendsData = <User>[];
-    final friendsList = state.friendslist;
     for (final userData in friendsList) {
       final user = await FireUserService().fetchUser(id: userData.id);
       if (user != null) {
         friendsData.add(user);
       }
     }
-    return friendsData;
-  }
-
-  Future<void> featchHomePaga() async {
-    final friendsList = await FireFriendsService().getMyFriends(id: _user.id);
-    final friendsData = await featchFriendsData();
-
     state = state.copyWith(
       friendslist: friendsList,
       friendsData: friendsData,

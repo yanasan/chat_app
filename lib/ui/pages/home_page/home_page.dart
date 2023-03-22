@@ -1,5 +1,4 @@
 import 'package:chat_app/controllers/home_page_controller/home_page_controller.dart';
-import 'package:chat_app/models/friends.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/ui/pages/chat_page/chat_page.dart';
 import 'package:chat_app/ui/themes/app_colors.dart';

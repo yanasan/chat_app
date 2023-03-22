@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UserState {
+  bool get isAuthenticated => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -28,7 +29,7 @@ abstract class $UserStateCopyWith<$Res> {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) then) =
       _$UserStateCopyWithImpl<$Res, UserState>;
   @useResult
-  $Res call({User user});
+  $Res call({bool isAuthenticated, User user});
 
   $UserCopyWith<$Res> get user;
 }
@@ -46,9 +47,14 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isAuthenticated = null,
     Object? user = null,
   }) {
     return _then(_value.copyWith(
+      isAuthenticated: null == isAuthenticated
+          ? _value.isAuthenticated
+          : isAuthenticated // ignore: cast_nullable_to_non_nullable
+              as bool,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -72,7 +78,7 @@ abstract class _$$_UserStateCopyWith<$Res> implements $UserStateCopyWith<$Res> {
       __$$_UserStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User user});
+  $Res call({bool isAuthenticated, User user});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -89,9 +95,14 @@ class __$$_UserStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isAuthenticated = null,
     Object? user = null,
   }) {
     return _then(_$_UserState(
+      isAuthenticated: null == isAuthenticated
+          ? _value.isAuthenticated
+          : isAuthenticated // ignore: cast_nullable_to_non_nullable
+              as bool,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -103,15 +114,18 @@ class __$$_UserStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_UserState implements _UserState {
-  const _$_UserState({this.user = const User()});
+  const _$_UserState({this.isAuthenticated = false, this.user = const User()});
 
+  @override
+  @JsonKey()
+  final bool isAuthenticated;
   @override
   @JsonKey()
   final User user;
 
   @override
   String toString() {
-    return 'UserState(user: $user)';
+    return 'UserState(isAuthenticated: $isAuthenticated, user: $user)';
   }
 
   @override
@@ -119,11 +133,13 @@ class _$_UserState implements _UserState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserState &&
+            (identical(other.isAuthenticated, isAuthenticated) ||
+                other.isAuthenticated == isAuthenticated) &&
             (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, isAuthenticated, user);
 
   @JsonKey(ignore: true)
   @override
@@ -133,8 +149,11 @@ class _$_UserState implements _UserState {
 }
 
 abstract class _UserState implements UserState {
-  const factory _UserState({final User user}) = _$_UserState;
+  const factory _UserState({final bool isAuthenticated, final User user}) =
+      _$_UserState;
 
+  @override
+  bool get isAuthenticated;
   @override
   User get user;
   @override

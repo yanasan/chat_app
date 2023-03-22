@@ -1,8 +1,29 @@
+import 'dart:async';
+
 import 'package:chat_app/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireUserService {
   final _fireStore = FirebaseFirestore.instance;
+
+  StreamSubscription listenUser({
+    required String id,
+    required Function(User) onValueChanged,
+  }) {
+    return _fireStore
+        .collection('commands')
+        .doc('all')
+        .collection('users')
+        .doc(id)
+        .snapshots()
+        .listen((snapshot) {
+      final data = snapshot.data();
+      if (data != null) {
+        final user = User.fromJson(data);
+        onValueChanged(user);
+      }
+    });
+  }
 
   Future<bool> isExisted({required String id}) async {
     final docSnapshot = await _fireStore

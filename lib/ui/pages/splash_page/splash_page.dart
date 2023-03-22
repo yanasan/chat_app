@@ -1,4 +1,4 @@
-import 'package:chat_app/controllers/user_controller/user_controller.dart';
+import 'package:chat_app/controllers/splash_page_controller/splash_page_controller.dart';
 import 'package:chat_app/ui/pages/root_page/root_page.dart';
 import 'package:chat_app/ui/themes/app_colors.dart';
 import 'package:chat_app/ui/themes/theme_text.dart';
@@ -12,6 +12,25 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
+        ref.listen<bool?>(splashPageProvider.select((s) => s.isFirstLaunch),
+            (_, isFirstLaunch) {
+          if (isFirstLaunch == true) {
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => const Rootpage(),
+            //   ),
+            // );
+          }
+          if (isFirstLaunch == false) {
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => const Rootpage(),
+            //   ),
+            // );
+          }
+        });
         return Scaffold(
           backgroundColor: AppColors.primaly,
           body: Center(
@@ -23,7 +42,6 @@ class SplashPage extends StatelessWidget {
                     builder: (context) => const Rootpage(),
                   ),
                 );
-                await ref.read(userProvider.notifier).createUser();
               },
               child: const WhiteText('ゲストで始める', 16),
             ),
