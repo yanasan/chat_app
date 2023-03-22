@@ -1,4 +1,3 @@
-import 'package:chat_app/models/messages.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'friends.freezed.dart';
@@ -9,7 +8,6 @@ class Friends with _$Friends {
   const factory Friends({
     @Default('') String id,
     @Default('') String pathId,
-    @Default([]) List<Message> message,
   }) = _Friends;
   const Friends._();
 

@@ -22,7 +22,6 @@ Friends _$FriendsFromJson(Map<String, dynamic> json) {
 mixin _$Friends {
   String get id => throw _privateConstructorUsedError;
   String get pathId => throw _privateConstructorUsedError;
-  List<Message> get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +33,7 @@ abstract class $FriendsCopyWith<$Res> {
   factory $FriendsCopyWith(Friends value, $Res Function(Friends) then) =
       _$FriendsCopyWithImpl<$Res, Friends>;
   @useResult
-  $Res call({String id, String pathId, List<Message> message});
+  $Res call({String id, String pathId});
 }
 
 /// @nodoc
@@ -52,7 +51,6 @@ class _$FriendsCopyWithImpl<$Res, $Val extends Friends>
   $Res call({
     Object? id = null,
     Object? pathId = null,
-    Object? message = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -63,10 +61,6 @@ class _$FriendsCopyWithImpl<$Res, $Val extends Friends>
           ? _value.pathId
           : pathId // ignore: cast_nullable_to_non_nullable
               as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as List<Message>,
     ) as $Val);
   }
 }
@@ -78,7 +72,7 @@ abstract class _$$_FriendsCopyWith<$Res> implements $FriendsCopyWith<$Res> {
       __$$_FriendsCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String pathId, List<Message> message});
+  $Res call({String id, String pathId});
 }
 
 /// @nodoc
@@ -93,7 +87,6 @@ class __$$_FriendsCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? pathId = null,
-    Object? message = null,
   }) {
     return _then(_$_Friends(
       id: null == id
@@ -104,10 +97,6 @@ class __$$_FriendsCopyWithImpl<$Res>
           ? _value.pathId
           : pathId // ignore: cast_nullable_to_non_nullable
               as String,
-      message: null == message
-          ? _value._message
-          : message // ignore: cast_nullable_to_non_nullable
-              as List<Message>,
     ));
   }
 }
@@ -115,10 +104,7 @@ class __$$_FriendsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Friends extends _Friends {
-  const _$_Friends(
-      {this.id = '', this.pathId = '', final List<Message> message = const []})
-      : _message = message,
-        super._();
+  const _$_Friends({this.id = '', this.pathId = ''}) : super._();
 
   factory _$_Friends.fromJson(Map<String, dynamic> json) =>
       _$$_FriendsFromJson(json);
@@ -129,18 +115,10 @@ class _$_Friends extends _Friends {
   @override
   @JsonKey()
   final String pathId;
-  final List<Message> _message;
-  @override
-  @JsonKey()
-  List<Message> get message {
-    if (_message is EqualUnmodifiableListView) return _message;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_message);
-  }
 
   @override
   String toString() {
-    return 'Friends(id: $id, pathId: $pathId, message: $message)';
+    return 'Friends(id: $id, pathId: $pathId)';
   }
 
   @override
@@ -149,14 +127,12 @@ class _$_Friends extends _Friends {
         (other.runtimeType == runtimeType &&
             other is _$_Friends &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.pathId, pathId) || other.pathId == pathId) &&
-            const DeepCollectionEquality().equals(other._message, _message));
+            (identical(other.pathId, pathId) || other.pathId == pathId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, pathId, const DeepCollectionEquality().hash(_message));
+  int get hashCode => Object.hash(runtimeType, id, pathId);
 
   @JsonKey(ignore: true)
   @override
@@ -173,10 +149,7 @@ class _$_Friends extends _Friends {
 }
 
 abstract class _Friends extends Friends {
-  const factory _Friends(
-      {final String id,
-      final String pathId,
-      final List<Message> message}) = _$_Friends;
+  const factory _Friends({final String id, final String pathId}) = _$_Friends;
   const _Friends._() : super._();
 
   factory _Friends.fromJson(Map<String, dynamic> json) = _$_Friends.fromJson;
@@ -185,8 +158,6 @@ abstract class _Friends extends Friends {
   String get id;
   @override
   String get pathId;
-  @override
-  List<Message> get message;
   @override
   @JsonKey(ignore: true)
   _$$_FriendsCopyWith<_$_Friends> get copyWith =>
