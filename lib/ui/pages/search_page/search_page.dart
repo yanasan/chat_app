@@ -22,16 +22,25 @@ class SearchPage extends HookConsumerWidget {
         builder: (context, ref, child) {
           final userList =
               ref.watch(searchPageProvider.select((value) => value.userList));
+          final isFollowings = ref.watch(
+              searchPageProvider.select((value) => value.userIsFollowing));
 
           return RefreshIndicator(
-            onRefresh: () async {},
+            onRefresh: () async {
+              ref.read(searchPageProvider.notifier).fetchSerchUser();
+            },
             child: ListView.builder(
               itemCount: userList.length,
               itemBuilder: (context, index) {
                 final users = userList[index];
-                return users.id == user.id
-                    ? Container()
-                    : buildUserCard(users: users);
+                final isFollowing = isFollowings[users.id];
+                if (isFollowing != null) {
+                  return buildUserCard(
+                    users: users,
+                    isFollowing: isFollowing,
+                  );
+                }
+                return const SizedBox();
               },
             ),
           );
@@ -40,7 +49,10 @@ class SearchPage extends HookConsumerWidget {
     );
   }
 
-  Widget buildUserCard({required User users}) {
+  Widget buildUserCard({
+    required User users,
+    required bool isFollowing,
+  }) {
     return Consumer(
       builder: (context, ref, child) {
         return Container(
@@ -54,16 +66,23 @@ class SearchPage extends HookConsumerWidget {
             children: [
               buildCardTab(text: users.id, title: 'id'),
               buildCardTab(text: users.name, title: '名前'),
-              buildCardTab(text: 'まだ', title: '紹介'),
+              buildCardTab(text: users.description, title: '紹介'),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                 onPressed: () {
-                  // ref
-                  //     .watch(searchPageProvider.notifier)
-                  //     .setFriend(id: users.id);
-                  // ElevatedButton.styleFrom(backgroundColor: AppColors.primaly);
+                  !isFollowing
+                      ? ref
+                          .read(searchPageProvider.notifier)
+                          .followUser(someoneId: users.id)
+                      : ref
+                          .read(searchPageProvider.notifier)
+                          .unfollowUser(someoneId: users.id);
+                  ElevatedButton.styleFrom(backgroundColor: AppColors.primaly);
                 },
-                child: const Black1Text('友達追加', 16),
+                child: Black1Text(
+                  !isFollowing ? 'フォローする' : 'フォロー解除',
+                  16,
+                ),
               )
             ],
           ),

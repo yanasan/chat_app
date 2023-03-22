@@ -8,7 +8,7 @@ part 'friends.g.dart';
 class Friends with _$Friends {
   const factory Friends({
     @Default('') String id,
-    @Default('') String name,
+    @Default('') String pathId,
     @Default([]) List<Message> message,
   }) = _Friends;
   const Friends._();

@@ -21,7 +21,7 @@ Friends _$FriendsFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Friends {
   String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String get pathId => throw _privateConstructorUsedError;
   List<Message> get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -34,7 +34,7 @@ abstract class $FriendsCopyWith<$Res> {
   factory $FriendsCopyWith(Friends value, $Res Function(Friends) then) =
       _$FriendsCopyWithImpl<$Res, Friends>;
   @useResult
-  $Res call({String id, String name, List<Message> message});
+  $Res call({String id, String pathId, List<Message> message});
 }
 
 /// @nodoc
@@ -51,7 +51,7 @@ class _$FriendsCopyWithImpl<$Res, $Val extends Friends>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
+    Object? pathId = null,
     Object? message = null,
   }) {
     return _then(_value.copyWith(
@@ -59,9 +59,9 @@ class _$FriendsCopyWithImpl<$Res, $Val extends Friends>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      pathId: null == pathId
+          ? _value.pathId
+          : pathId // ignore: cast_nullable_to_non_nullable
               as String,
       message: null == message
           ? _value.message
@@ -78,7 +78,7 @@ abstract class _$$_FriendsCopyWith<$Res> implements $FriendsCopyWith<$Res> {
       __$$_FriendsCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, List<Message> message});
+  $Res call({String id, String pathId, List<Message> message});
 }
 
 /// @nodoc
@@ -92,7 +92,7 @@ class __$$_FriendsCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
+    Object? pathId = null,
     Object? message = null,
   }) {
     return _then(_$_Friends(
@@ -100,9 +100,9 @@ class __$$_FriendsCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      pathId: null == pathId
+          ? _value.pathId
+          : pathId // ignore: cast_nullable_to_non_nullable
               as String,
       message: null == message
           ? _value._message
@@ -116,7 +116,7 @@ class __$$_FriendsCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Friends extends _Friends {
   const _$_Friends(
-      {this.id = '', this.name = '', final List<Message> message = const []})
+      {this.id = '', this.pathId = '', final List<Message> message = const []})
       : _message = message,
         super._();
 
@@ -128,7 +128,7 @@ class _$_Friends extends _Friends {
   final String id;
   @override
   @JsonKey()
-  final String name;
+  final String pathId;
   final List<Message> _message;
   @override
   @JsonKey()
@@ -140,7 +140,7 @@ class _$_Friends extends _Friends {
 
   @override
   String toString() {
-    return 'Friends(id: $id, name: $name, message: $message)';
+    return 'Friends(id: $id, pathId: $pathId, message: $message)';
   }
 
   @override
@@ -149,14 +149,14 @@ class _$_Friends extends _Friends {
         (other.runtimeType == runtimeType &&
             other is _$_Friends &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
+            (identical(other.pathId, pathId) || other.pathId == pathId) &&
             const DeepCollectionEquality().equals(other._message, _message));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, const DeepCollectionEquality().hash(_message));
+      runtimeType, id, pathId, const DeepCollectionEquality().hash(_message));
 
   @JsonKey(ignore: true)
   @override
@@ -175,7 +175,7 @@ class _$_Friends extends _Friends {
 abstract class _Friends extends Friends {
   const factory _Friends(
       {final String id,
-      final String name,
+      final String pathId,
       final List<Message> message}) = _$_Friends;
   const _Friends._() : super._();
 
@@ -184,7 +184,7 @@ abstract class _Friends extends Friends {
   @override
   String get id;
   @override
-  String get name;
+  String get pathId;
   @override
   List<Message> get message;
   @override

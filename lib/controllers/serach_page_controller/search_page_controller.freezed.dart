@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SearchPageState {
   List<User> get userList => throw _privateConstructorUsedError;
+  Map<String, bool> get userIsFollowing => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SearchPageStateCopyWith<SearchPageState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $SearchPageStateCopyWith<$Res> {
           SearchPageState value, $Res Function(SearchPageState) then) =
       _$SearchPageStateCopyWithImpl<$Res, SearchPageState>;
   @useResult
-  $Res call({List<User> userList});
+  $Res call({List<User> userList, Map<String, bool> userIsFollowing});
 }
 
 /// @nodoc
@@ -46,12 +47,17 @@ class _$SearchPageStateCopyWithImpl<$Res, $Val extends SearchPageState>
   @override
   $Res call({
     Object? userList = null,
+    Object? userIsFollowing = null,
   }) {
     return _then(_value.copyWith(
       userList: null == userList
           ? _value.userList
           : userList // ignore: cast_nullable_to_non_nullable
               as List<User>,
+      userIsFollowing: null == userIsFollowing
+          ? _value.userIsFollowing
+          : userIsFollowing // ignore: cast_nullable_to_non_nullable
+              as Map<String, bool>,
     ) as $Val);
   }
 }
@@ -64,7 +70,7 @@ abstract class _$$_SearchPageStateCopyWith<$Res>
       __$$_SearchPageStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<User> userList});
+  $Res call({List<User> userList, Map<String, bool> userIsFollowing});
 }
 
 /// @nodoc
@@ -79,12 +85,17 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userList = null,
+    Object? userIsFollowing = null,
   }) {
     return _then(_$_SearchPageState(
       userList: null == userList
           ? _value._userList
           : userList // ignore: cast_nullable_to_non_nullable
               as List<User>,
+      userIsFollowing: null == userIsFollowing
+          ? _value._userIsFollowing
+          : userIsFollowing // ignore: cast_nullable_to_non_nullable
+              as Map<String, bool>,
     ));
   }
 }
@@ -92,8 +103,11 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_SearchPageState implements _SearchPageState {
-  const _$_SearchPageState({final List<User> userList = const []})
-      : _userList = userList;
+  const _$_SearchPageState(
+      {final List<User> userList = const [],
+      final Map<String, bool> userIsFollowing = const {}})
+      : _userList = userList,
+        _userIsFollowing = userIsFollowing;
 
   final List<User> _userList;
   @override
@@ -104,9 +118,18 @@ class _$_SearchPageState implements _SearchPageState {
     return EqualUnmodifiableListView(_userList);
   }
 
+  final Map<String, bool> _userIsFollowing;
+  @override
+  @JsonKey()
+  Map<String, bool> get userIsFollowing {
+    if (_userIsFollowing is EqualUnmodifiableMapView) return _userIsFollowing;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_userIsFollowing);
+  }
+
   @override
   String toString() {
-    return 'SearchPageState(userList: $userList)';
+    return 'SearchPageState(userList: $userList, userIsFollowing: $userIsFollowing)';
   }
 
   @override
@@ -114,12 +137,16 @@ class _$_SearchPageState implements _SearchPageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SearchPageState &&
-            const DeepCollectionEquality().equals(other._userList, _userList));
+            const DeepCollectionEquality().equals(other._userList, _userList) &&
+            const DeepCollectionEquality()
+                .equals(other._userIsFollowing, _userIsFollowing));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_userList));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_userList),
+      const DeepCollectionEquality().hash(_userIsFollowing));
 
   @JsonKey(ignore: true)
   @override
@@ -129,11 +156,14 @@ class _$_SearchPageState implements _SearchPageState {
 }
 
 abstract class _SearchPageState implements SearchPageState {
-  const factory _SearchPageState({final List<User> userList}) =
-      _$_SearchPageState;
+  const factory _SearchPageState(
+      {final List<User> userList,
+      final Map<String, bool> userIsFollowing}) = _$_SearchPageState;
 
   @override
   List<User> get userList;
+  @override
+  Map<String, bool> get userIsFollowing;
   @override
   @JsonKey(ignore: true)
   _$$_SearchPageStateCopyWith<_$_SearchPageState> get copyWith =>

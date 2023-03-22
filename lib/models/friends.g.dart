@@ -8,7 +8,7 @@ part of 'friends.dart';
 
 _$_Friends _$$_FriendsFromJson(Map<String, dynamic> json) => _$_Friends(
       id: json['id'] as String? ?? '',
-      name: json['name'] as String? ?? '',
+      pathId: json['pathId'] as String? ?? '',
       message: (json['message'] as List<dynamic>?)
               ?.map((e) => Message.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -18,6 +18,6 @@ _$_Friends _$$_FriendsFromJson(Map<String, dynamic> json) => _$_Friends(
 Map<String, dynamic> _$$_FriendsToJson(_$_Friends instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'name': instance.name,
+      'pathId': instance.pathId,
       'message': instance.message,
     };

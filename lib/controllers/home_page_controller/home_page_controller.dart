@@ -1,6 +1,7 @@
 import 'package:chat_app/controllers/user_controller/user_controller.dart';
 import 'package:chat_app/models/friends.dart';
 import 'package:chat_app/models/user.dart';
+import 'package:chat_app/service/fire_friends_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -24,7 +25,18 @@ final homePageProvider =
 class HomePageController extends StateNotifier<HomePageState> {
   HomePageController({required User user})
       : _user = user,
-        super(const HomePageState());
+        super(const HomePageState()) {
+    init();
+  }
 
   final User _user;
+
+  void init() {
+    featchHomePaga();
+  }
+
+  Future<void> featchHomePaga() async {
+    final friendsList = await FireFriendsService().getMyFriends(id: _user.id);
+    state = state.copyWith(friendslist: friendsList);
+  }
 }

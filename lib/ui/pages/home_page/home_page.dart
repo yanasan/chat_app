@@ -65,8 +65,8 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    Black1Text(
-                      friends.name.isEmpty ? 'none' : friends.name,
+                    const Black1Text(
+                      'none',
                       16,
                     ),
                   ],
