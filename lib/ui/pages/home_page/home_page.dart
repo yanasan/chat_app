@@ -1,5 +1,6 @@
 import 'package:chat_app/controllers/home_page_controller/home_page_controller.dart';
 import 'package:chat_app/models/friends.dart';
+import 'package:chat_app/models/user.dart';
 import 'package:chat_app/ui/pages/chat_page/chat_page.dart';
 import 'package:chat_app/ui/themes/app_colors.dart';
 import 'package:chat_app/ui/themes/theme_text.dart';
@@ -18,16 +19,19 @@ class HomePage extends StatelessWidget {
       ),
       body: Consumer(
         builder: (context, ref, child) {
-          final friendsList =
-              ref.watch(homePageProvider.select((value) => value.friendslist));
+          final friendsData =
+              ref.watch(homePageProvider.select((value) => value.friendsData));
 
           return RefreshIndicator(
-            onRefresh: () async {},
+            onRefresh: () async {
+              ref.read(homePageProvider.notifier).featchHomePaga();
+            },
             child: ListView.builder(
-              itemCount: friendsList.length,
+              itemCount: friendsData.length,
               itemBuilder: (context, index) {
-                final friends = friendsList[index];
-                return buildUserItem(friends: friends);
+                final userData = friendsData[index];
+
+                return buildUserItem(userData: userData);
               },
             ),
           );
@@ -36,7 +40,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildUserItem({required Friends friends}) {
+  Widget buildUserItem({required User userData}) {
     return Consumer(
       builder: (context, ref, child) {
         return Column(
@@ -47,26 +51,35 @@ class HomePage extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ChatPage()),
+                    MaterialPageRoute(
+                        builder: (context) => ChatPage(user: userData)),
                   );
                 },
                 child: Row(
                   children: [
-                    Container(
-                      height: 52,
-                      width: 52,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Image.asset(
-                        'images/profileImage.png',
-                        fit: BoxFit.cover,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        height: 52,
+                        width: 52,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: userData.profileImage.url.isEmpty
+                            ? Image.asset(
+                                'images/profileImage.png',
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(
+                                userData.profileImage.url,
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                     const SizedBox(width: 16),
-                    const Black1Text(
-                      'none',
+                    Black1Text(
+                      userData.name.isEmpty ? 'ゲスト' : userData.name,
                       16,
                     ),
                   ],

@@ -1,10 +1,13 @@
+import 'package:chat_app/models/user.dart';
 import 'package:chat_app/ui/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 
 final controller = TextEditingController();
 
 class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
+  const ChatPage({super.key, required this.user});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,9 @@ class ChatPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.gray2,
         appBar: AppBar(
-          title: const Text('test'),
+          title: Text(
+            user.name.isEmpty ? 'ゲスト' : user.name,
+          ),
         ),
         body: buildChatPageTextFields(),
       ),
