@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:chat_app/controllers/user_controller/user_controller.dart';
+import 'package:chat_app/models/chat.dart';
 import 'package:chat_app/models/friends.dart';
 import 'package:chat_app/models/user.dart';
+import 'package:chat_app/service/fire_chat_service.dart';
 import 'package:chat_app/service/fire_friends_service.dart';
 import 'package:chat_app/service/fire_user_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,6 +17,8 @@ class HomePageState with _$HomePageState {
   const factory HomePageState({
     @Default([]) List<Friends> friendslist,
     @Default([]) List<User> friendsData,
+    @Default([]) List<Chat> chatList,
+    Chat? chat,
   }) = _HomePageState;
 }
 
@@ -39,6 +45,7 @@ class HomePageController extends StateNotifier<HomePageState> {
 
   Future<void> featchHomePaga() async {
     final friendsList = await FireFriendsService().getMyFriends(id: _user.id);
+
     final friendsData = <User>[];
     for (final userData in friendsList) {
       final user = await FireUserService().fetchUser(id: userData.id);
@@ -46,9 +53,50 @@ class HomePageController extends StateNotifier<HomePageState> {
         friendsData.add(user);
       }
     }
+    final chatList = await FireChatService().fetchChatList();
     state = state.copyWith(
       friendslist: friendsList,
       friendsData: friendsData,
+      chatList: chatList,
     );
+  }
+
+  Future<void> createChatRoom({required String someoneId}) async {
+    final member = <String>[_user.id];
+    member.add(someoneId);
+    final isRoom = <bool>[];
+
+    if (state.chatList.isEmpty) {
+      await FireChatService().createChatRoom(member: member);
+    } else {
+      for (final chatData in state.chatList) {
+        final chatMember = chatData.member;
+
+        if (chatMember.contains(_user.id) && chatMember.contains(someoneId)) {
+          final chat =
+              await FireChatService().fetchChat(roomId: chatData.roomId);
+
+          state = state.copyWith(chat: chat);
+        } else {
+          isRoom.add(false);
+        }
+      }
+      if (isRoom.length == state.chatList.length) {
+        await FireChatService().createChatRoom(member: member);
+      }
+    }
+
+    final chatList = await FireChatService().fetchChatList();
+    state = state.copyWith(chatList: chatList);
+  }
+
+  Future<void> featchChat() async {
+    final chatList = await FireChatService().fetchChatList();
+    state = state.copyWith(chatList: chatList);
+
+    for (final chatData in chatList) {
+      final chat = await FireChatService().fetchChat(roomId: chatData.roomId);
+      state = state.copyWith(chat: chat);
+    }
   }
 }

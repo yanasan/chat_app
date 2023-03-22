@@ -14,39 +14,39 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Friends _$FriendsFromJson(Map<String, dynamic> json) {
-  return _Friends.fromJson(json);
+Chat _$ChatFromJson(Map<String, dynamic> json) {
+  return _Chat.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Friends {
+mixin _$Chat {
   List<String> get member => throw _privateConstructorUsedError;
   String get roomId => throw _privateConstructorUsedError;
+  List<Message> get message => throw _privateConstructorUsedError;
   @FireTimestampConverterNonNull()
   DateTime get created => throw _privateConstructorUsedError;
-  List<Message> get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $FriendsCopyWith<Friends> get copyWith => throw _privateConstructorUsedError;
+  $ChatCopyWith<Chat> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FriendsCopyWith<$Res> {
-  factory $FriendsCopyWith(Friends value, $Res Function(Friends) then) =
-      _$FriendsCopyWithImpl<$Res, Friends>;
+abstract class $ChatCopyWith<$Res> {
+  factory $ChatCopyWith(Chat value, $Res Function(Chat) then) =
+      _$ChatCopyWithImpl<$Res, Chat>;
   @useResult
   $Res call(
       {List<String> member,
       String roomId,
-      @FireTimestampConverterNonNull() DateTime created,
-      List<Message> message});
+      List<Message> message,
+      @FireTimestampConverterNonNull() DateTime created});
 }
 
 /// @nodoc
-class _$FriendsCopyWithImpl<$Res, $Val extends Friends>
-    implements $FriendsCopyWith<$Res> {
-  _$FriendsCopyWithImpl(this._value, this._then);
+class _$ChatCopyWithImpl<$Res, $Val extends Chat>
+    implements $ChatCopyWith<$Res> {
+  _$ChatCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -58,8 +58,8 @@ class _$FriendsCopyWithImpl<$Res, $Val extends Friends>
   $Res call({
     Object? member = null,
     Object? roomId = null,
-    Object? created = null,
     Object? message = null,
+    Object? created = null,
   }) {
     return _then(_value.copyWith(
       member: null == member
@@ -70,37 +70,35 @@ class _$FriendsCopyWithImpl<$Res, $Val extends Friends>
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
               as String,
-      created: null == created
-          ? _value.created
-          : created // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as List<Message>,
+      created: null == created
+          ? _value.created
+          : created // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_FriendsCopyWith<$Res> implements $FriendsCopyWith<$Res> {
-  factory _$$_FriendsCopyWith(
-          _$_Friends value, $Res Function(_$_Friends) then) =
-      __$$_FriendsCopyWithImpl<$Res>;
+abstract class _$$_ChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
+  factory _$$_ChatCopyWith(_$_Chat value, $Res Function(_$_Chat) then) =
+      __$$_ChatCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {List<String> member,
       String roomId,
-      @FireTimestampConverterNonNull() DateTime created,
-      List<Message> message});
+      List<Message> message,
+      @FireTimestampConverterNonNull() DateTime created});
 }
 
 /// @nodoc
-class __$$_FriendsCopyWithImpl<$Res>
-    extends _$FriendsCopyWithImpl<$Res, _$_Friends>
-    implements _$$_FriendsCopyWith<$Res> {
-  __$$_FriendsCopyWithImpl(_$_Friends _value, $Res Function(_$_Friends) _then)
+class __$$_ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res, _$_Chat>
+    implements _$$_ChatCopyWith<$Res> {
+  __$$_ChatCopyWithImpl(_$_Chat _value, $Res Function(_$_Chat) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,10 +106,10 @@ class __$$_FriendsCopyWithImpl<$Res>
   $Res call({
     Object? member = null,
     Object? roomId = null,
-    Object? created = null,
     Object? message = null,
+    Object? created = null,
   }) {
-    return _then(_$_Friends(
+    return _then(_$_Chat(
       member: null == member
           ? _value._member
           : member // ignore: cast_nullable_to_non_nullable
@@ -120,32 +118,31 @@ class __$$_FriendsCopyWithImpl<$Res>
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
               as String,
-      created: null == created
-          ? _value.created
-          : created // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       message: null == message
           ? _value._message
           : message // ignore: cast_nullable_to_non_nullable
               as List<Message>,
+      created: null == created
+          ? _value.created
+          : created // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Friends extends _Friends {
-  const _$_Friends(
+class _$_Chat extends _Chat {
+  const _$_Chat(
       {final List<String> member = const [],
       this.roomId = '',
-      @FireTimestampConverterNonNull() required this.created,
-      final List<Message> message = const []})
+      final List<Message> message = const [],
+      @FireTimestampConverterNonNull() required this.created})
       : _member = member,
         _message = message,
         super._();
 
-  factory _$_Friends.fromJson(Map<String, dynamic> json) =>
-      _$$_FriendsFromJson(json);
+  factory _$_Chat.fromJson(Map<String, dynamic> json) => _$$_ChatFromJson(json);
 
   final List<String> _member;
   @override
@@ -159,9 +156,6 @@ class _$_Friends extends _Friends {
   @override
   @JsonKey()
   final String roomId;
-  @override
-  @FireTimestampConverterNonNull()
-  final DateTime created;
   final List<Message> _message;
   @override
   @JsonKey()
@@ -172,19 +166,23 @@ class _$_Friends extends _Friends {
   }
 
   @override
+  @FireTimestampConverterNonNull()
+  final DateTime created;
+
+  @override
   String toString() {
-    return 'Friends(member: $member, roomId: $roomId, created: $created, message: $message)';
+    return 'Chat(member: $member, roomId: $roomId, message: $message, created: $created)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Friends &&
+            other is _$_Chat &&
             const DeepCollectionEquality().equals(other._member, _member) &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
-            (identical(other.created, created) || other.created == created) &&
-            const DeepCollectionEquality().equals(other._message, _message));
+            const DeepCollectionEquality().equals(other._message, _message) &&
+            (identical(other.created, created) || other.created == created));
   }
 
   @JsonKey(ignore: true)
@@ -193,44 +191,44 @@ class _$_Friends extends _Friends {
       runtimeType,
       const DeepCollectionEquality().hash(_member),
       roomId,
-      created,
-      const DeepCollectionEquality().hash(_message));
+      const DeepCollectionEquality().hash(_message),
+      created);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FriendsCopyWith<_$_Friends> get copyWith =>
-      __$$_FriendsCopyWithImpl<_$_Friends>(this, _$identity);
+  _$$_ChatCopyWith<_$_Chat> get copyWith =>
+      __$$_ChatCopyWithImpl<_$_Chat>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FriendsToJson(
+    return _$$_ChatToJson(
       this,
     );
   }
 }
 
-abstract class _Friends extends Friends {
-  const factory _Friends(
-      {final List<String> member,
-      final String roomId,
-      @FireTimestampConverterNonNull() required final DateTime created,
-      final List<Message> message}) = _$_Friends;
-  const _Friends._() : super._();
+abstract class _Chat extends Chat {
+  const factory _Chat(
+          {final List<String> member,
+          final String roomId,
+          final List<Message> message,
+          @FireTimestampConverterNonNull() required final DateTime created}) =
+      _$_Chat;
+  const _Chat._() : super._();
 
-  factory _Friends.fromJson(Map<String, dynamic> json) = _$_Friends.fromJson;
+  factory _Chat.fromJson(Map<String, dynamic> json) = _$_Chat.fromJson;
 
   @override
   List<String> get member;
   @override
   String get roomId;
   @override
+  List<Message> get message;
+  @override
   @FireTimestampConverterNonNull()
   DateTime get created;
   @override
-  List<Message> get message;
-  @override
   @JsonKey(ignore: true)
-  _$$_FriendsCopyWith<_$_Friends> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_ChatCopyWith<_$_Chat> get copyWith => throw _privateConstructorUsedError;
 }

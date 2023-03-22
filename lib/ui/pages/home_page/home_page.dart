@@ -29,7 +29,6 @@ class HomePage extends StatelessWidget {
               itemCount: friendsData.length,
               itemBuilder: (context, index) {
                 final userData = friendsData[index];
-
                 return buildUserItem(userData: userData);
               },
             ),
@@ -47,12 +46,17 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 5),
               child: GestureDetector(
-                onTap: () {
+                onTap: () async {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ChatPage(user: userData)),
+                      builder: (context) => ChatPage(user: userData),
+                    ),
                   );
+
+                  await ref
+                      .read(homePageProvider.notifier)
+                      .createChatRoom(someoneId: userData.id);
                 },
                 child: Row(
                   children: [

@@ -6,15 +6,14 @@ part 'chat.freezed.dart';
 part 'chat.g.dart';
 
 @freezed
-class Friends with _$Friends {
-  const factory Friends({
+class Chat with _$Chat {
+  const factory Chat({
     @Default([]) List<String> member,
     @Default('') String roomId,
-    @FireTimestampConverterNonNull() required DateTime created,
     @Default([]) List<Message> message,
-  }) = _Friends;
-  const Friends._();
+    @FireTimestampConverterNonNull() required DateTime created,
+  }) = _Chat;
+  const Chat._();
 
-  factory Friends.fromJson(Map<String, dynamic> json) =>
-      _$FriendsFromJson(json);
+  factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
 }
