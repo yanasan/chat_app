@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:chat_app/controllers/user_controller/user_controller.dart';
 import 'package:chat_app/models/chat.dart';
 import 'package:chat_app/models/friends.dart';
@@ -18,7 +16,7 @@ class HomePageState with _$HomePageState {
     @Default([]) List<Friends> friendslist,
     @Default([]) List<User> friendsData,
     @Default([]) List<Chat> chatList,
-    Chat? chat,
+    required Chat chat,
   }) = _HomePageState;
 }
 
@@ -26,14 +24,16 @@ final homePageProvider =
     StateNotifierProvider.autoDispose<HomePageController, HomePageState>(
   (ref) {
     final user = ref.watch(userProvider.select((value) => value.user));
-    return HomePageController(user: user);
+    return HomePageController(user: user, chat: Chat(created: DateTime.now()));
   },
 );
 
 class HomePageController extends StateNotifier<HomePageState> {
-  HomePageController({required User user})
-      : _user = user,
-        super(const HomePageState()) {
+  HomePageController({
+    required User user,
+    required Chat chat,
+  })  : _user = user,
+        super(HomePageState(chat: chat)) {
     init();
   }
 
@@ -75,8 +75,10 @@ class HomePageController extends StateNotifier<HomePageState> {
         if (chatMember.contains(_user.id) && chatMember.contains(someoneId)) {
           final chat =
               await FireChatService().fetchChat(roomId: chatData.roomId);
+          if (chat == null) return;
 
           state = state.copyWith(chat: chat);
+          print(state.chat);
         } else {
           isRoom.add(false);
         }
@@ -96,6 +98,7 @@ class HomePageController extends StateNotifier<HomePageState> {
 
     for (final chatData in chatList) {
       final chat = await FireChatService().fetchChat(roomId: chatData.roomId);
+      if (chat == null) return;
       state = state.copyWith(chat: chat);
     }
   }

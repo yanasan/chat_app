@@ -21,6 +21,9 @@ class HomePage extends StatelessWidget {
           final friendsData =
               ref.watch(homePageProvider.select((value) => value.friendsData));
 
+          final roomIds =
+              ref.watch(homePageProvider.select((value) => value.chatList));
+
           return RefreshIndicator(
             onRefresh: () async {
               ref.read(homePageProvider.notifier).featchHomePaga();
@@ -28,8 +31,9 @@ class HomePage extends StatelessWidget {
             child: ListView.builder(
               itemCount: friendsData.length,
               itemBuilder: (context, index) {
+                final roomId = roomIds[index].roomId;
                 final userData = friendsData[index];
-                return buildUserItem(userData: userData);
+                return buildUserItem(userData: userData, roomId: roomId);
               },
             ),
           );
@@ -38,7 +42,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildUserItem({required User userData}) {
+  Widget buildUserItem({required User userData, required String roomId}) {
     return Consumer(
       builder: (context, ref, child) {
         return Column(
@@ -50,10 +54,12 @@ class HomePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ChatPage(user: userData),
+                      builder: (context) => ChatPage(
+                        user: userData,
+                        roomId: roomId,
+                      ),
                     ),
                   );
-
                   await ref
                       .read(homePageProvider.notifier)
                       .createChatRoom(someoneId: userData.id);

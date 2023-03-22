@@ -17,7 +17,8 @@ class SettingProfilePage {
   }
 }
 
-final formKey = GlobalKey<FormState>();
+final _formKeyProvider =
+    StateProvider.autoDispose<GlobalKey<FormState>?>((ref) => null);
 
 class _SettingProfilePage extends HookConsumerWidget {
   @override
@@ -59,9 +60,10 @@ class _SettingProfilePage extends HookConsumerWidget {
   Widget buildSubmitButton() {
     return Consumer(
       builder: (context, ref, _) {
+        final formKey = ref.watch(_formKeyProvider);
         return GestureDetector(
           onTap: () async {
-            final formState = formKey.currentState;
+            final formState = formKey?.currentState;
             FocusScope.of(context).unfocus();
             await EasyLoading.show(status: '保存中...');
             if (formState != null && formState.validate()) {
@@ -178,10 +180,21 @@ class _SettingProfilePage extends HookConsumerWidget {
   }
 
   Widget buildTextArea() {
-    return Consumer(
+    return HookConsumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         final user =
             ref.watch(settingProfilePageProvider.select((value) => value.user));
+        final formKey = useMemoized(GlobalKey<FormState>.new, const []);
+
+        useEffect(
+          () {
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              ref.read(_formKeyProvider.notifier).state = formKey;
+            });
+            return null;
+          },
+          [formKey],
+        );
 
         return Form(
           key: formKey,

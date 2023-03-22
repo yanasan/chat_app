@@ -22,7 +22,6 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
 mixin _$Chat {
   List<String> get member => throw _privateConstructorUsedError;
   String get roomId => throw _privateConstructorUsedError;
-  List<Message> get message => throw _privateConstructorUsedError;
   @FireTimestampConverterNonNull()
   DateTime get created => throw _privateConstructorUsedError;
 
@@ -39,7 +38,6 @@ abstract class $ChatCopyWith<$Res> {
   $Res call(
       {List<String> member,
       String roomId,
-      List<Message> message,
       @FireTimestampConverterNonNull() DateTime created});
 }
 
@@ -58,7 +56,6 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
   $Res call({
     Object? member = null,
     Object? roomId = null,
-    Object? message = null,
     Object? created = null,
   }) {
     return _then(_value.copyWith(
@@ -70,10 +67,6 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
               as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as List<Message>,
       created: null == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
@@ -91,7 +84,6 @@ abstract class _$$_ChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
   $Res call(
       {List<String> member,
       String roomId,
-      List<Message> message,
       @FireTimestampConverterNonNull() DateTime created});
 }
 
@@ -106,7 +98,6 @@ class __$$_ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res, _$_Chat>
   $Res call({
     Object? member = null,
     Object? roomId = null,
-    Object? message = null,
     Object? created = null,
   }) {
     return _then(_$_Chat(
@@ -118,10 +109,6 @@ class __$$_ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res, _$_Chat>
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
               as String,
-      message: null == message
-          ? _value._message
-          : message // ignore: cast_nullable_to_non_nullable
-              as List<Message>,
       created: null == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
@@ -136,10 +123,8 @@ class _$_Chat extends _Chat {
   const _$_Chat(
       {final List<String> member = const [],
       this.roomId = '',
-      final List<Message> message = const [],
       @FireTimestampConverterNonNull() required this.created})
       : _member = member,
-        _message = message,
         super._();
 
   factory _$_Chat.fromJson(Map<String, dynamic> json) => _$$_ChatFromJson(json);
@@ -156,22 +141,13 @@ class _$_Chat extends _Chat {
   @override
   @JsonKey()
   final String roomId;
-  final List<Message> _message;
-  @override
-  @JsonKey()
-  List<Message> get message {
-    if (_message is EqualUnmodifiableListView) return _message;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_message);
-  }
-
   @override
   @FireTimestampConverterNonNull()
   final DateTime created;
 
   @override
   String toString() {
-    return 'Chat(member: $member, roomId: $roomId, message: $message, created: $created)';
+    return 'Chat(member: $member, roomId: $roomId, created: $created)';
   }
 
   @override
@@ -181,18 +157,13 @@ class _$_Chat extends _Chat {
             other is _$_Chat &&
             const DeepCollectionEquality().equals(other._member, _member) &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
-            const DeepCollectionEquality().equals(other._message, _message) &&
             (identical(other.created, created) || other.created == created));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_member),
-      roomId,
-      const DeepCollectionEquality().hash(_message),
-      created);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_member), roomId, created);
 
   @JsonKey(ignore: true)
   @override
@@ -212,7 +183,6 @@ abstract class _Chat extends Chat {
   const factory _Chat(
           {final List<String> member,
           final String roomId,
-          final List<Message> message,
           @FireTimestampConverterNonNull() required final DateTime created}) =
       _$_Chat;
   const _Chat._() : super._();
@@ -223,8 +193,6 @@ abstract class _Chat extends Chat {
   List<String> get member;
   @override
   String get roomId;
-  @override
-  List<Message> get message;
   @override
   @FireTimestampConverterNonNull()
   DateTime get created;

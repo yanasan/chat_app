@@ -1,4 +1,5 @@
 import 'package:chat_app/models/chat.dart';
+import 'package:chat_app/models/messages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireChatService {
@@ -47,5 +48,27 @@ class FireChatService {
     } else {
       return null;
     }
+  }
+
+  Future<void> sendMessage({
+    required String roomId,
+    required String userId,
+    required String message,
+  }) async {
+    final snapshot = _fireStore
+        .collection('commands')
+        .doc('all')
+        .collection('chatroom')
+        .doc(roomId)
+        .collection('messages')
+        .doc(userId);
+
+    final messages = Message(
+      created: DateTime.now(),
+      userId: userId,
+      message: message,
+    );
+
+    await snapshot.set({...messages.toJson()});
   }
 }

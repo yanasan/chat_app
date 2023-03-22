@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ChatPageState {
-  int get tabIndex => throw _privateConstructorUsedError;
+  String get message => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatPageStateCopyWith<ChatPageState> get copyWith =>
@@ -29,7 +29,7 @@ abstract class $ChatPageStateCopyWith<$Res> {
           ChatPageState value, $Res Function(ChatPageState) then) =
       _$ChatPageStateCopyWithImpl<$Res, ChatPageState>;
   @useResult
-  $Res call({int tabIndex});
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -45,13 +45,13 @@ class _$ChatPageStateCopyWithImpl<$Res, $Val extends ChatPageState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? tabIndex = null,
+    Object? message = null,
   }) {
     return _then(_value.copyWith(
-      tabIndex: null == tabIndex
-          ? _value.tabIndex
-          : tabIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -64,7 +64,7 @@ abstract class _$$_RootPageStateCopyWith<$Res>
       __$$_RootPageStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int tabIndex});
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -78,13 +78,13 @@ class __$$_RootPageStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? tabIndex = null,
+    Object? message = null,
   }) {
     return _then(_$_RootPageState(
-      tabIndex: null == tabIndex
-          ? _value.tabIndex
-          : tabIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -92,15 +92,15 @@ class __$$_RootPageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_RootPageState implements _RootPageState {
-  const _$_RootPageState({this.tabIndex = 0});
+  const _$_RootPageState({this.message = ''});
 
   @override
   @JsonKey()
-  final int tabIndex;
+  final String message;
 
   @override
   String toString() {
-    return 'ChatPageState(tabIndex: $tabIndex)';
+    return 'ChatPageState(message: $message)';
   }
 
   @override
@@ -108,12 +108,11 @@ class _$_RootPageState implements _RootPageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RootPageState &&
-            (identical(other.tabIndex, tabIndex) ||
-                other.tabIndex == tabIndex));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, tabIndex);
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
@@ -123,10 +122,10 @@ class _$_RootPageState implements _RootPageState {
 }
 
 abstract class _RootPageState implements ChatPageState {
-  const factory _RootPageState({final int tabIndex}) = _$_RootPageState;
+  const factory _RootPageState({final String message}) = _$_RootPageState;
 
   @override
-  int get tabIndex;
+  String get message;
   @override
   @JsonKey(ignore: true)
   _$$_RootPageStateCopyWith<_$_RootPageState> get copyWith =>
