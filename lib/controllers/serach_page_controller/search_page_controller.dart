@@ -20,7 +20,6 @@ final searchPageProvider =
     StateNotifierProvider.autoDispose<SearchPageController, SearchPageState>(
         (ref) {
   final user = ref.watch(userProvider.select((value) => value.user));
-  print(user);
   return SearchPageController(user: user);
 });
 

@@ -144,7 +144,7 @@ class _SettingProfilePage extends HookConsumerWidget {
   }
 
   Widget buildMyTextFields({
-    required String initValue,
+    String? initValue,
     required String hintText,
     required void Function(String value) onSaved,
     String? Function(String? value)? validator,
@@ -155,9 +155,10 @@ class _SettingProfilePage extends HookConsumerWidget {
         useEffect(
           () {
             WidgetsBinding.instance.addPostFrameCallback((_) async {
-              controller.text = initValue;
+              if (initValue != null) {
+                controller.text = initValue;
+              }
             });
-
             return null;
           },
           [initValue],
@@ -171,7 +172,6 @@ class _SettingProfilePage extends HookConsumerWidget {
           },
           validator: validator,
           controller: controller,
-          initialValue: initValue,
         );
       },
     );
