@@ -21,6 +21,7 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Message {
   String get userId => throw _privateConstructorUsedError;
+  String get messageId => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   @FireTimestampConverterNonNull()
   DateTime get created => throw _privateConstructorUsedError;
@@ -37,6 +38,7 @@ abstract class $MessageCopyWith<$Res> {
   @useResult
   $Res call(
       {String userId,
+      String messageId,
       String message,
       @FireTimestampConverterNonNull() DateTime created});
 }
@@ -55,6 +57,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   @override
   $Res call({
     Object? userId = null,
+    Object? messageId = null,
     Object? message = null,
     Object? created = null,
   }) {
@@ -62,6 +65,10 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      messageId: null == messageId
+          ? _value.messageId
+          : messageId // ignore: cast_nullable_to_non_nullable
               as String,
       message: null == message
           ? _value.message
@@ -84,6 +91,7 @@ abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
   @useResult
   $Res call(
       {String userId,
+      String messageId,
       String message,
       @FireTimestampConverterNonNull() DateTime created});
 }
@@ -99,6 +107,7 @@ class __$$_MessageCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userId = null,
+    Object? messageId = null,
     Object? message = null,
     Object? created = null,
   }) {
@@ -106,6 +115,10 @@ class __$$_MessageCopyWithImpl<$Res>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      messageId: null == messageId
+          ? _value.messageId
+          : messageId // ignore: cast_nullable_to_non_nullable
               as String,
       message: null == message
           ? _value.message
@@ -124,6 +137,7 @@ class __$$_MessageCopyWithImpl<$Res>
 class _$_Message extends _Message {
   const _$_Message(
       {this.userId = '',
+      this.messageId = '',
       this.message = '',
       @FireTimestampConverterNonNull() required this.created})
       : super._();
@@ -136,6 +150,9 @@ class _$_Message extends _Message {
   final String userId;
   @override
   @JsonKey()
+  final String messageId;
+  @override
+  @JsonKey()
   final String message;
   @override
   @FireTimestampConverterNonNull()
@@ -143,7 +160,7 @@ class _$_Message extends _Message {
 
   @override
   String toString() {
-    return 'Message(userId: $userId, message: $message, created: $created)';
+    return 'Message(userId: $userId, messageId: $messageId, message: $message, created: $created)';
   }
 
   @override
@@ -152,13 +169,16 @@ class _$_Message extends _Message {
         (other.runtimeType == runtimeType &&
             other is _$_Message &&
             (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.messageId, messageId) ||
+                other.messageId == messageId) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.created, created) || other.created == created));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userId, message, created);
+  int get hashCode =>
+      Object.hash(runtimeType, userId, messageId, message, created);
 
   @JsonKey(ignore: true)
   @override
@@ -177,6 +197,7 @@ class _$_Message extends _Message {
 abstract class _Message extends Message {
   const factory _Message(
           {final String userId,
+          final String messageId,
           final String message,
           @FireTimestampConverterNonNull() required final DateTime created}) =
       _$_Message;
@@ -186,6 +207,8 @@ abstract class _Message extends Message {
 
   @override
   String get userId;
+  @override
+  String get messageId;
   @override
   String get message;
   @override

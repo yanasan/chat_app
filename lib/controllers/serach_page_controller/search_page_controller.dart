@@ -81,25 +81,25 @@ class SearchPageController extends StateNotifier<SearchPageState> {
   Future<void> fetchSerchUser() async {
     final userList = await FireUserService().fetchUserList(id: _user.id);
     final userIsFollowing = await fetchIsFollowing();
+    final chatList = await FireChatService().fetchChatList(myId: _user.id);
     state = state.copyWith(
       userList: userList,
       userIsFollowing: userIsFollowing,
+      chatList: chatList,
     );
   }
 
   Future<void> createChatRoom({required String someoneId}) async {
     final member = <String>[_user.id];
     member.add(someoneId);
-
     await FireChatService().createChatRoom(member: member);
-    print('新規作成');
-
     final chatList = await FireChatService().fetchChatList(myId: _user.id);
     state = state.copyWith(chatList: chatList);
   }
 
   Future<String> getRoomId({required someoneId}) async {
     var roomId = '';
+
     for (final chatData in state.chatList) {
       final chatMember = chatData.member;
       if (chatMember.contains(_user.id) && chatMember.contains(someoneId)) {

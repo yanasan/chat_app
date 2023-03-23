@@ -38,6 +38,7 @@ class ChatPageController extends StateNotifier<ChatPageState> {
   Future<void> sendMessage() async {
     await FireChatService()
         .sendMessage(roomId: _roomId, userId: _userId, message: state.message);
+    await fetchMessage();
   }
 
   Future<void> fetchMessage() async {

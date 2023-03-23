@@ -8,6 +8,7 @@ part 'messages.g.dart';
 class Message with _$Message {
   const factory Message({
     @Default('') String userId,
+    @Default('') String messageId,
     @Default('') String message,
     @FireTimestampConverterNonNull() required DateTime created,
   }) = _Message;

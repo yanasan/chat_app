@@ -45,7 +45,8 @@ class FireChatService {
         .doc('all')
         .collection('chatroom')
         .doc(roomId)
-        .collection('messages');
+        .collection('messages')
+        .orderBy('created', descending: false);
 
     final data = await snapshot.get();
 
@@ -84,12 +85,13 @@ class FireChatService {
         .collection('chatroom')
         .doc(roomId)
         .collection('messages')
-        .doc(userId);
+        .doc();
 
     final messages = Message(
       created: DateTime.now(),
       userId: userId,
       message: message,
+      messageId: snapshot.id,
     );
 
     await snapshot.set({...messages.toJson()});

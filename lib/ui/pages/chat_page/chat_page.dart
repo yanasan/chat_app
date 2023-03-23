@@ -44,7 +44,7 @@ class ChatPage extends StatelessWidget {
             builder: (context, ref, child) {
               final messages =
                   ref.watch(chatPageProvider.select((value) => value.messages));
-              print(messages);
+
               return Column(
                 children: [
                   Expanded(
@@ -156,6 +156,7 @@ class ChatPage extends StatelessWidget {
               formState.save();
               await ref.read(chatPageProvider.notifier).sendMessage();
               await EasyLoading.showSuccess('保存完了！');
+              formState.reset();
             } else {
               await EasyLoading.showError('保存に失敗しました');
             }
