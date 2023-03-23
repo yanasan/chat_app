@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireChatService {
   final _fireStore = FirebaseFirestore.instance;
+
   Future<void> createChatRoom({required List<String> member}) async {
     final snapshot = _fireStore
         .collection('commands')
@@ -12,7 +13,7 @@ class FireChatService {
         .doc();
 
     final chat = Chat(
-      created: DateTime.now(),
+      update: DateTime.now(),
       member: member,
       roomId: snapshot.id,
     );
@@ -20,9 +21,13 @@ class FireChatService {
     await snapshot.set({...chat.toJson()});
   }
 
-  Future<List<Chat>> fetchChatList() async {
-    final snapshot =
-        _fireStore.collection('commands').doc('all').collection('chatroom');
+  Future<List<Chat>> fetchChatList({required String myId}) async {
+    final snapshot = _fireStore
+        .collection('commands')
+        .doc('all')
+        .collection('chatroom')
+        .where('member', arrayContains: myId)
+        .orderBy('update', descending: true);
 
     final data = await snapshot.get();
 
@@ -32,6 +37,24 @@ class FireChatService {
     }).toList();
 
     return chat;
+  }
+
+  Future<List<Message>> fetchMessages({required String roomId}) async {
+    final snapshot = _fireStore
+        .collection('commands')
+        .doc('all')
+        .collection('chatroom')
+        .doc(roomId)
+        .collection('messages');
+
+    final data = await snapshot.get();
+
+    final message = data.docs.map((doc) {
+      final data = doc.data();
+      return Message.fromJson(data);
+    }).toList();
+
+    return message;
   }
 
   Future<Chat?> fetchChat({required String roomId}) async {
@@ -70,5 +93,14 @@ class FireChatService {
     );
 
     await snapshot.set({...messages.toJson()});
+  }
+
+  Future<void> removeChatRoom({required String roomId}) async {
+    _fireStore
+        .collection('commands')
+        .doc('all')
+        .collection('chatroom')
+        .doc(roomId)
+        .delete();
   }
 }

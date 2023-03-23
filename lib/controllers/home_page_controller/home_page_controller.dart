@@ -24,7 +24,7 @@ final homePageProvider =
     StateNotifierProvider.autoDispose<HomePageController, HomePageState>(
   (ref) {
     final user = ref.watch(userProvider.select((value) => value.user));
-    return HomePageController(user: user, chat: Chat(created: DateTime.now()));
+    return HomePageController(user: user, chat: Chat(update: DateTime.now()));
   },
 );
 
@@ -53,53 +53,12 @@ class HomePageController extends StateNotifier<HomePageState> {
         friendsData.add(user);
       }
     }
-    final chatList = await FireChatService().fetchChatList();
+    final chatList = await FireChatService().fetchChatList(myId: _user.id);
+
     state = state.copyWith(
       friendslist: friendsList,
       friendsData: friendsData,
       chatList: chatList,
     );
-  }
-
-  Future<void> createChatRoom({required String someoneId}) async {
-    final member = <String>[_user.id];
-    member.add(someoneId);
-    final isRoom = <bool>[];
-
-    if (state.chatList.isEmpty) {
-      await FireChatService().createChatRoom(member: member);
-    } else {
-      for (final chatData in state.chatList) {
-        final chatMember = chatData.member;
-
-        if (chatMember.contains(_user.id) && chatMember.contains(someoneId)) {
-          final chat =
-              await FireChatService().fetchChat(roomId: chatData.roomId);
-          if (chat == null) return;
-
-          state = state.copyWith(chat: chat);
-          print(state.chat);
-        } else {
-          isRoom.add(false);
-        }
-      }
-      if (isRoom.length == state.chatList.length) {
-        await FireChatService().createChatRoom(member: member);
-      }
-    }
-
-    final chatList = await FireChatService().fetchChatList();
-    state = state.copyWith(chatList: chatList);
-  }
-
-  Future<void> featchChat() async {
-    final chatList = await FireChatService().fetchChatList();
-    state = state.copyWith(chatList: chatList);
-
-    for (final chatData in chatList) {
-      final chat = await FireChatService().fetchChat(roomId: chatData.roomId);
-      if (chat == null) return;
-      state = state.copyWith(chat: chat);
-    }
   }
 }

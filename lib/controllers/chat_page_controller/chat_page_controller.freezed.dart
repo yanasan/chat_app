@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ChatPageState {
   String get message => throw _privateConstructorUsedError;
+  List<Message> get messages => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatPageStateCopyWith<ChatPageState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $ChatPageStateCopyWith<$Res> {
           ChatPageState value, $Res Function(ChatPageState) then) =
       _$ChatPageStateCopyWithImpl<$Res, ChatPageState>;
   @useResult
-  $Res call({String message});
+  $Res call({String message, List<Message> messages});
 }
 
 /// @nodoc
@@ -46,12 +47,17 @@ class _$ChatPageStateCopyWithImpl<$Res, $Val extends ChatPageState>
   @override
   $Res call({
     Object? message = null,
+    Object? messages = null,
   }) {
     return _then(_value.copyWith(
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      messages: null == messages
+          ? _value.messages
+          : messages // ignore: cast_nullable_to_non_nullable
+              as List<Message>,
     ) as $Val);
   }
 }
@@ -64,7 +70,7 @@ abstract class _$$_RootPageStateCopyWith<$Res>
       __$$_RootPageStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String message});
+  $Res call({String message, List<Message> messages});
 }
 
 /// @nodoc
@@ -79,12 +85,17 @@ class __$$_RootPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? message = null,
+    Object? messages = null,
   }) {
     return _then(_$_RootPageState(
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      messages: null == messages
+          ? _value._messages
+          : messages // ignore: cast_nullable_to_non_nullable
+              as List<Message>,
     ));
   }
 }
@@ -92,15 +103,25 @@ class __$$_RootPageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_RootPageState implements _RootPageState {
-  const _$_RootPageState({this.message = ''});
+  const _$_RootPageState(
+      {this.message = '', final List<Message> messages = const []})
+      : _messages = messages;
 
   @override
   @JsonKey()
   final String message;
+  final List<Message> _messages;
+  @override
+  @JsonKey()
+  List<Message> get messages {
+    if (_messages is EqualUnmodifiableListView) return _messages;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_messages);
+  }
 
   @override
   String toString() {
-    return 'ChatPageState(message: $message)';
+    return 'ChatPageState(message: $message, messages: $messages)';
   }
 
   @override
@@ -108,11 +129,13 @@ class _$_RootPageState implements _RootPageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RootPageState &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            const DeepCollectionEquality().equals(other._messages, _messages));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode => Object.hash(
+      runtimeType, message, const DeepCollectionEquality().hash(_messages));
 
   @JsonKey(ignore: true)
   @override
@@ -122,10 +145,13 @@ class _$_RootPageState implements _RootPageState {
 }
 
 abstract class _RootPageState implements ChatPageState {
-  const factory _RootPageState({final String message}) = _$_RootPageState;
+  const factory _RootPageState(
+      {final String message, final List<Message> messages}) = _$_RootPageState;
 
   @override
   String get message;
+  @override
+  List<Message> get messages;
   @override
   @JsonKey(ignore: true)
   _$$_RootPageStateCopyWith<_$_RootPageState> get copyWith =>

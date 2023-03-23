@@ -36,14 +36,39 @@ class ChatPage extends StatelessWidget {
           overrides: [
             chatPageProvider.overrideWith(
               (ref) {
-                print(roomId);
                 return ChatPageController(roomId: roomId, userId: user.id);
               },
             ),
           ],
           child: Consumer(
             builder: (context, ref, child) {
-              return buildChatPageTextFields();
+              final messages =
+                  ref.watch(chatPageProvider.select((value) => value.messages));
+              print(messages);
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        final message = messages[index];
+
+                        return Container(
+                          child: Text(message.message),
+                        );
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(
+                      left: 16,
+                    ),
+                    color: AppColors.primaly2,
+                    height: 100,
+                    child: buildChatPageTextFields(),
+                  )
+                ],
+              );
             },
           ),
         ),
@@ -65,29 +90,19 @@ class ChatPage extends StatelessWidget {
           },
           [formKey],
         );
-        return Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            padding: const EdgeInsets.only(
-              left: 16,
-            ),
-            color: AppColors.primaly2,
-            height: 100,
-            child: Row(
-              children: [
-                Flexible(
-                  child: Form(
-                    key: formKey,
-                    child: buildMyTextFields(
-                      hintText: 'メッセージを入力してください',
-                      onSaved: ref.read(chatPageProvider.notifier).setMessage,
-                    ),
-                  ),
+        return Row(
+          children: [
+            Flexible(
+              child: Form(
+                key: formKey,
+                child: buildMyTextFields(
+                  hintText: 'メッセージを入力してください',
+                  onSaved: ref.read(chatPageProvider.notifier).setMessage,
                 ),
-                buildSendButton(),
-              ],
+              ),
             ),
-          ),
+            buildSendButton(),
+          ],
         );
       },
     );

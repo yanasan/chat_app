@@ -77,6 +77,7 @@ class SearchPage extends HookConsumerWidget {
                       : ref
                           .read(searchPageProvider.notifier)
                           .unfollowUser(someoneId: users.id);
+
                   ElevatedButton.styleFrom(backgroundColor: AppColors.primaly);
                 },
                 child: Black1Text(

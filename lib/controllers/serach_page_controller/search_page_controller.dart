@@ -1,4 +1,6 @@
 import 'package:chat_app/controllers/user_controller/user_controller.dart';
+import 'package:chat_app/models/chat.dart';
+import 'package:chat_app/service/fire_chat_service.dart';
 import 'package:chat_app/service/fire_user_service.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,6 +15,7 @@ class SearchPageState with _$SearchPageState {
   const factory SearchPageState({
     @Default([]) List<User> userList,
     @Default({}) Map<String, bool> userIsFollowing,
+    @Default([]) List<Chat> chatList,
   }) = _SearchPageState;
 }
 
@@ -40,22 +43,25 @@ class SearchPageController extends StateNotifier<SearchPageState> {
   }) async {
     await EasyLoading.show(status: 'loading...');
     await FireFriendsService().followUser(someoneId: someoneId, myId: _user.id);
+    await createChatRoom(someoneId: someoneId);
     final userIsFollowingMap = Map.of(state.userIsFollowing);
     userIsFollowingMap[someoneId] = true;
     state = state.copyWith(userIsFollowing: userIsFollowingMap);
-    await EasyLoading.dismiss();
+    await EasyLoading.showSuccess('友人に追加しました');
   }
 
   Future<void> unfollowUser({
     required String someoneId,
   }) async {
     await EasyLoading.show(status: 'loading...');
+    final roomId = await getRoomId(someoneId: someoneId);
     await FireFriendsService()
         .removeFollowUser(someoneId: someoneId, myId: _user.id);
+    await FireChatService().removeChatRoom(roomId: roomId);
     final userIsFollowingMap = Map.of(state.userIsFollowing);
     userIsFollowingMap[someoneId] = false;
     state = state.copyWith(userIsFollowing: userIsFollowingMap);
-    await EasyLoading.dismiss();
+    await EasyLoading.showSuccess('友人から削除しました');
   }
 
   Future<Map<String, bool>> fetchIsFollowing() async {
@@ -79,5 +85,27 @@ class SearchPageController extends StateNotifier<SearchPageState> {
       userList: userList,
       userIsFollowing: userIsFollowing,
     );
+  }
+
+  Future<void> createChatRoom({required String someoneId}) async {
+    final member = <String>[_user.id];
+    member.add(someoneId);
+
+    await FireChatService().createChatRoom(member: member);
+    print('新規作成');
+
+    final chatList = await FireChatService().fetchChatList(myId: _user.id);
+    state = state.copyWith(chatList: chatList);
+  }
+
+  Future<String> getRoomId({required someoneId}) async {
+    var roomId = '';
+    for (final chatData in state.chatList) {
+      final chatMember = chatData.member;
+      if (chatMember.contains(_user.id) && chatMember.contains(someoneId)) {
+        roomId = chatData.roomId;
+      }
+    }
+    return roomId;
   }
 }

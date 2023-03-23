@@ -12,11 +12,11 @@ _$_Chat _$$_ChatFromJson(Map<String, dynamic> json) => _$_Chat(
               .toList() ??
           const [],
       roomId: json['roomId'] as String? ?? '',
-      created: const FireTimestampConverterNonNull().fromJson(json['created']),
+      update: const FireTimestampConverterNonNull().fromJson(json['update']),
     );
 
 Map<String, dynamic> _$$_ChatToJson(_$_Chat instance) => <String, dynamic>{
       'member': instance.member,
       'roomId': instance.roomId,
-      'created': const FireTimestampConverterNonNull().toJson(instance.created),
+      'update': const FireTimestampConverterNonNull().toJson(instance.update),
     };

@@ -9,7 +9,7 @@ class Chat with _$Chat {
   const factory Chat({
     @Default([]) List<String> member,
     @Default('') String roomId,
-    @FireTimestampConverterNonNull() required DateTime created,
+    @FireTimestampConverterNonNull() required DateTime update,
   }) = _Chat;
   const Chat._();
 

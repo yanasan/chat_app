@@ -1,4 +1,5 @@
 import 'package:chat_app/controllers/home_page_controller/home_page_controller.dart';
+import 'package:chat_app/controllers/user_controller/user_controller.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/ui/pages/chat_page/chat_page.dart';
 import 'package:chat_app/ui/themes/app_colors.dart';
@@ -21,7 +22,7 @@ class HomePage extends StatelessWidget {
           final friendsData =
               ref.watch(homePageProvider.select((value) => value.friendsData));
 
-          final roomIds =
+          final chatList =
               ref.watch(homePageProvider.select((value) => value.chatList));
 
           return RefreshIndicator(
@@ -29,9 +30,9 @@ class HomePage extends StatelessWidget {
               ref.read(homePageProvider.notifier).featchHomePaga();
             },
             child: ListView.builder(
-              itemCount: friendsData.length,
+              itemCount: chatList.length,
               itemBuilder: (context, index) {
-                final roomId = roomIds[index].roomId;
+                final roomId = chatList[index].roomId;
                 final userData = friendsData[index];
                 return buildUserItem(userData: userData, roomId: roomId);
               },
@@ -42,7 +43,10 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildUserItem({required User userData, required String roomId}) {
+  Widget buildUserItem({
+    required User userData,
+    required String roomId,
+  }) {
     return Consumer(
       builder: (context, ref, child) {
         return Column(
@@ -60,9 +64,6 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   );
-                  await ref
-                      .read(homePageProvider.notifier)
-                      .createChatRoom(someoneId: userData.id);
                 },
                 child: Row(
                   children: [
