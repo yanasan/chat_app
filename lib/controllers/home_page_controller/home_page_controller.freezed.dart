@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomePageState {
-  List<Friends> get friendslist => throw _privateConstructorUsedError;
   List<User> get friendsData => throw _privateConstructorUsedError;
   List<Chat> get chatList => throw _privateConstructorUsedError;
   Chat get chat => throw _privateConstructorUsedError;
@@ -32,11 +31,7 @@ abstract class $HomePageStateCopyWith<$Res> {
           HomePageState value, $Res Function(HomePageState) then) =
       _$HomePageStateCopyWithImpl<$Res, HomePageState>;
   @useResult
-  $Res call(
-      {List<Friends> friendslist,
-      List<User> friendsData,
-      List<Chat> chatList,
-      Chat chat});
+  $Res call({List<User> friendsData, List<Chat> chatList, Chat chat});
 
   $ChatCopyWith<$Res> get chat;
 }
@@ -54,16 +49,11 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? friendslist = null,
     Object? friendsData = null,
     Object? chatList = null,
     Object? chat = null,
   }) {
     return _then(_value.copyWith(
-      friendslist: null == friendslist
-          ? _value.friendslist
-          : friendslist // ignore: cast_nullable_to_non_nullable
-              as List<Friends>,
       friendsData: null == friendsData
           ? _value.friendsData
           : friendsData // ignore: cast_nullable_to_non_nullable
@@ -96,11 +86,7 @@ abstract class _$$_HomePageStateCopyWith<$Res>
       __$$_HomePageStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {List<Friends> friendslist,
-      List<User> friendsData,
-      List<Chat> chatList,
-      Chat chat});
+  $Res call({List<User> friendsData, List<Chat> chatList, Chat chat});
 
   @override
   $ChatCopyWith<$Res> get chat;
@@ -117,16 +103,11 @@ class __$$_HomePageStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? friendslist = null,
     Object? friendsData = null,
     Object? chatList = null,
     Object? chat = null,
   }) {
     return _then(_$_HomePageState(
-      friendslist: null == friendslist
-          ? _value._friendslist
-          : friendslist // ignore: cast_nullable_to_non_nullable
-              as List<Friends>,
       friendsData: null == friendsData
           ? _value._friendsData
           : friendsData // ignore: cast_nullable_to_non_nullable
@@ -147,22 +128,11 @@ class __$$_HomePageStateCopyWithImpl<$Res>
 
 class _$_HomePageState implements _HomePageState {
   const _$_HomePageState(
-      {final List<Friends> friendslist = const [],
-      final List<User> friendsData = const [],
+      {final List<User> friendsData = const [],
       final List<Chat> chatList = const [],
       required this.chat})
-      : _friendslist = friendslist,
-        _friendsData = friendsData,
+      : _friendsData = friendsData,
         _chatList = chatList;
-
-  final List<Friends> _friendslist;
-  @override
-  @JsonKey()
-  List<Friends> get friendslist {
-    if (_friendslist is EqualUnmodifiableListView) return _friendslist;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_friendslist);
-  }
 
   final List<User> _friendsData;
   @override
@@ -187,7 +157,7 @@ class _$_HomePageState implements _HomePageState {
 
   @override
   String toString() {
-    return 'HomePageState(friendslist: $friendslist, friendsData: $friendsData, chatList: $chatList, chat: $chat)';
+    return 'HomePageState(friendsData: $friendsData, chatList: $chatList, chat: $chat)';
   }
 
   @override
@@ -195,8 +165,6 @@ class _$_HomePageState implements _HomePageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_HomePageState &&
-            const DeepCollectionEquality()
-                .equals(other._friendslist, _friendslist) &&
             const DeepCollectionEquality()
                 .equals(other._friendsData, _friendsData) &&
             const DeepCollectionEquality().equals(other._chatList, _chatList) &&
@@ -206,7 +174,6 @@ class _$_HomePageState implements _HomePageState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_friendslist),
       const DeepCollectionEquality().hash(_friendsData),
       const DeepCollectionEquality().hash(_chatList),
       chat);
@@ -220,13 +187,10 @@ class _$_HomePageState implements _HomePageState {
 
 abstract class _HomePageState implements HomePageState {
   const factory _HomePageState(
-      {final List<Friends> friendslist,
-      final List<User> friendsData,
+      {final List<User> friendsData,
       final List<Chat> chatList,
       required final Chat chat}) = _$_HomePageState;
 
-  @override
-  List<Friends> get friendslist;
   @override
   List<User> get friendsData;
   @override
