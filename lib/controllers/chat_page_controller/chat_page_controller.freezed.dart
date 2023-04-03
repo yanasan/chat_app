@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ChatPageState {
-  String get message => throw _privateConstructorUsedError;
+  String get message =>
+      throw _privateConstructorUsedError; // @Default(null) Stream<QuerySnapshot<Map<String, dynamic>>> snapshot,
   List<Message> get messages => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -103,14 +104,15 @@ class __$$_RootPageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_RootPageState implements _RootPageState {
-  const _$_RootPageState(
-      {this.message = '', final List<Message> messages = const []})
+  _$_RootPageState({this.message = '', final List<Message> messages = const []})
       : _messages = messages;
 
   @override
   @JsonKey()
   final String message;
+// @Default(null) Stream<QuerySnapshot<Map<String, dynamic>>> snapshot,
   final List<Message> _messages;
+// @Default(null) Stream<QuerySnapshot<Map<String, dynamic>>> snapshot,
   @override
   @JsonKey()
   List<Message> get messages {
@@ -145,12 +147,12 @@ class _$_RootPageState implements _RootPageState {
 }
 
 abstract class _RootPageState implements ChatPageState {
-  const factory _RootPageState(
-      {final String message, final List<Message> messages}) = _$_RootPageState;
+  factory _RootPageState({final String message, final List<Message> messages}) =
+      _$_RootPageState;
 
   @override
   String get message;
-  @override
+  @override // @Default(null) Stream<QuerySnapshot<Map<String, dynamic>>> snapshot,
   List<Message> get messages;
   @override
   @JsonKey(ignore: true)

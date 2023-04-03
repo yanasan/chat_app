@@ -21,6 +21,18 @@ class FireChatService {
     await snapshot.set({...chat.toJson()});
   }
 
+  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> snapshotId(
+      {required String roomId}) async {
+    final snapshot = _fireStore
+        .collection('commands')
+        .doc('all')
+        .collection('chatroom')
+        .doc(roomId)
+        .collection('messages');
+
+    return snapshot.snapshots();
+  }
+
   Future<List<Chat>> fetchChatList({required String myId}) async {
     final snapshot = _fireStore
         .collection('commands')

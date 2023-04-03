@@ -3,6 +3,7 @@ import 'package:chat_app/controllers/user_controller/user_controller.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/ui/pages/chat_page/widget/chat_card.dart';
 import 'package:chat_app/ui/themes/app_colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -10,8 +11,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final _formKeyProvider =
     StateProvider.autoDispose<GlobalKey<FormState>?>((ref) => null);
+ScrollController scrollController = ScrollController();
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends ConsumerWidget {
   const ChatPage({
     super.key,
     required this.user,
@@ -22,10 +24,17 @@ class ChatPage extends StatelessWidget {
   final String roomId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
+      },
+      onDoubleTap: () {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(seconds: 1),
+          curve: Curves.linear,
+        );
       },
       child: Scaffold(
         backgroundColor: AppColors.gray2,
@@ -46,20 +55,42 @@ class ChatPage extends StatelessWidget {
           ],
           child: Consumer(
             builder: (context, ref, child) {
-              final messages =
-                  ref.watch(chatPageProvider.select((value) => value.messages));
+              final snapshot = FirebaseFirestore.instance
+                  .collection('commands')
+                  .doc('all')
+                  .collection('chatroom')
+                  .doc(roomId)
+                  .collection('messages')
+                  .orderBy('created', descending: false)
+                  .snapshots();
 
               return Column(
                 children: [
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: messages.length,
-                      itemBuilder: (context, index) {
-                        final message = messages[index];
-                        return ChatCard(
-                          message: message,
-                          someoneId: user.id,
-                        );
+                    child: StreamBuilder<Object>(
+                      stream: snapshot,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          QuerySnapshot<Map<String, dynamic>> querySnapshot =
+                              snapshot.data!
+                                  as QuerySnapshot<Map<String, dynamic>>;
+
+                          return ListView.builder(
+                            controller: scrollController,
+                            itemCount: querySnapshot.docs.length,
+                            itemBuilder: (context, index) {
+                              final data = querySnapshot.docs[index].data();
+                              final message = data['message'] as String;
+                              final userId = data['userId'] as String;
+                              return ChatCard(
+                                message: message,
+                                someoneId: user.id,
+                                userId: userId,
+                              );
+                            },
+                          );
+                        }
+                        return const SizedBox();
                       },
                     ),
                   ),
@@ -70,7 +101,7 @@ class ChatPage extends StatelessWidget {
                     color: AppColors.primaly2,
                     height: 100,
                     child: buildChatPageTextFields(),
-                  )
+                  ),
                 ],
               );
             },
@@ -84,7 +115,6 @@ class ChatPage extends StatelessWidget {
     return HookConsumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         final formKey = useMemoized(GlobalKey<FormState>.new, const []);
-
         useEffect(
           () {
             WidgetsBinding.instance.addPostFrameCallback((_) async {

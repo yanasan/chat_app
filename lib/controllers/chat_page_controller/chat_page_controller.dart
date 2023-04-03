@@ -7,7 +7,7 @@ part 'chat_page_controller.freezed.dart';
 
 @freezed
 class ChatPageState with _$ChatPageState {
-  const factory ChatPageState({
+  factory ChatPageState({
     @Default('') String message,
     @Default([]) List<Message> messages,
   }) = _RootPageState;
@@ -24,9 +24,7 @@ class ChatPageController extends StateNotifier<ChatPageState> {
     required String userId,
   })  : _roomId = roomId,
         _userId = userId,
-        super(const ChatPageState()) {
-    fetchMessage();
-  }
+        super(ChatPageState());
 
   final String _roomId;
   final String _userId;
@@ -38,11 +36,5 @@ class ChatPageController extends StateNotifier<ChatPageState> {
   Future<void> sendMessage() async {
     await FireChatService()
         .sendMessage(roomId: _roomId, userId: _userId, message: state.message);
-    await fetchMessage();
-  }
-
-  Future<void> fetchMessage() async {
-    final messages = await FireChatService().fetchMessages(roomId: _roomId);
-    state = state.copyWith(messages: messages);
   }
 }
