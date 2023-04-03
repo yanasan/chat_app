@@ -55,6 +55,7 @@ class Black1Text extends _ThemeText {
     super.text,
     super.size, {
     super.key,
+    super.overflow,
   }) : super(color: AppColors.black1, weight: FontWeight.w400);
 
   const Black1Text.bold(

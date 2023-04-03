@@ -1,5 +1,7 @@
 import 'package:chat_app/controllers/chat_page_controller/chat_page_controller.dart';
+import 'package:chat_app/controllers/user_controller/user_controller.dart';
 import 'package:chat_app/models/user.dart';
+import 'package:chat_app/ui/pages/chat_page/widget/chat_card.dart';
 import 'package:chat_app/ui/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -36,7 +38,9 @@ class ChatPage extends StatelessWidget {
           overrides: [
             chatPageProvider.overrideWith(
               (ref) {
-                return ChatPageController(roomId: roomId, userId: user.id);
+                final usrId =
+                    ref.watch(userProvider.select((value) => value.user.id));
+                return ChatPageController(roomId: roomId, userId: usrId);
               },
             ),
           ],
@@ -52,9 +56,9 @@ class ChatPage extends StatelessWidget {
                       itemCount: messages.length,
                       itemBuilder: (context, index) {
                         final message = messages[index];
-
-                        return Container(
-                          child: Text(message.message),
+                        return ChatCard(
+                          message: message,
+                          someoneId: user.id,
                         );
                       },
                     ),
